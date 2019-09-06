@@ -79,7 +79,7 @@ const featured = [
         hatID: 5 //real
     },
     {
-        image: require("./assets/radX.png"),
+        image: require("./assets/radicalxchange.png"),
         title: "RadicalXchange Foundation",
         shortTitle: "RadicalXchange",
         description:
