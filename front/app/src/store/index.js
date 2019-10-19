@@ -16,12 +16,28 @@ const SELF_HAT_ID = new BN("10", 2)
     .pow(new BN("100", 16))
     .sub(new BN("1", 2))
     .toString();
-const HARDCODED_CHAIN = 4; //rinkeby
+const HARDCODED_CHAIN = 1;
 const TOKENS = {
+    1: {
+        dai: "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
+        cdai: "0xf5dce57282a584d2746faf1593d3121fcac444dc",
+        rdai: "0xea8b224eDD3e342DEb514C4176c2E72Bcce6fFF9"
+    },
+    3: {
+        cdai: "0x2b536482a01e620ee111747f8334b395a42a555e"
+    },
     4: {
         dai: "0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa",
         cdai: "0x6d7f0754ffeb405d23c51ce938289d4835be3b14",
-        rdai: "0xb0C72645268E95696f5b6F40aa5b12E1eBdc8a5A"
+        rdai: "0x6AA5c6aB94403Bdbbf74f21607D46Be631E6CcC5"
+    },
+    5: {
+        cdai: "0xd9fd9e875c9c1d567825e431dd6ed4f0e51aa8bf"
+    },
+    42: {
+        dai: "0xbF7A7169562078c96f0eC1A8aFD6aE50f12e5A99",
+        cdai: "0x0a1e4d0b5c71b955c0a5993023fc48ba6e380496",
+        rdai: "0x3183683cEeAb01699722053A2cb6A945cE0D7CeC"
     },
     decimals: {
         dai: 18,
@@ -100,6 +116,9 @@ export default new Vuex.Store({
         SETUSERADDRESS: (state, address) => {
             state.account.address = address;
         },
+        SETCHAINID: (state, chainId) => {
+            state.account.chainId = chainId;
+        },
         SETBALANCE: (state, { symbol, bal }) => {
             Vue.set(state.account.balances, symbol, bal);
         },
@@ -157,18 +176,6 @@ export default new Vuex.Store({
                     );
                     break;
                 }
-                case "chain": {
-                    setError(
-                        `Please switch to the ${
-                            HARDCODED_CHAIN === 4
-                                ? "rinkeby network"
-                                : "mainnet"
-                        }`,
-                        "fas fa-unlink",
-                        12000
-                    );
-                    break;
-                }
                 default:
                     setError(
                         text || "there was an error",
@@ -223,22 +230,13 @@ export default new Vuex.Store({
                     console.log("web3: ", web3);
                     const p = await web3.currentProvider.enable();
                     console.log("enabled? ", p);
+                    const chainId = await web3.eth.net.getId();
+                    commit("SETCHAINID", chainId);
                     try {
-                        await contracts.init(
-                            window.web3,
-                            TOKENS[HARDCODED_CHAIN]
-                        );
+                        await contracts.init(window.web3, TOKENS, chainId);
                     } catch (e) {
                         commit("SETLOADING", false);
                         console.log("error is on contract.init", e);
-                        reject(false);
-                    }
-                    const chainId = await web3.eth.net.getId();
-                    if (chainId !== HARDCODED_CHAIN) {
-                        commit("SETLOADING", false);
-                        commit("ERROR", {
-                            type: "chain"
-                        });
                         reject(false);
                     }
                     commit(
@@ -270,19 +268,23 @@ export default new Vuex.Store({
                 }
             });
         },
-        getBalances({ dispatch }) {
+        getBalances({ dispatch, state }) {
             return new Promise(resolve => {
-                Object.keys(TOKENS[HARDCODED_CHAIN]).forEach(async key => {
-                    await dispatch("getBalance", key);
-                });
+                Object.keys(TOKENS[state.account.chainId]).forEach(
+                    async key => {
+                        await dispatch("getBalance", key);
+                    }
+                );
                 resolve(true);
             });
         },
-        getAllowances({ dispatch }) {
+        getAllowances({ dispatch, state }) {
             return new Promise(resolve => {
-                Object.keys(TOKENS[HARDCODED_CHAIN]).forEach(async key => {
-                    await dispatch("getAllowance", key);
-                });
+                Object.keys(TOKENS[state.account.chainId]).forEach(
+                    async key => {
+                        await dispatch("getAllowance", key);
+                    }
+                );
                 resolve(true);
             });
         },
@@ -374,17 +376,15 @@ export default new Vuex.Store({
                 parseFloat(rate.cToken[0].supply_rate.value)
             );
         },
-        setupWeb3Listeners({ commit, dispatch }) {
+        setupWeb3Listeners({ commit, dispatch, state }) {
             const ethereum = window.ethereum;
             if (typeof ethereum.on === "function") {
                 ethereum.on("accountsChanged", () => {
                     dispatch("activateWeb3");
                 });
                 ethereum.on("networkChanged", e => {
-                    if (parseInt(e) !== HARDCODED_CHAIN) {
-                        commit("ERROR", {
-                            type: "chain"
-                        });
+                    if (parseInt(e) !== state.account.chainId) {
+                        dispatch("activateWeb3");
                     } else {
                         commit("SHOWSNACKBAR", false);
                     }
@@ -426,7 +426,7 @@ export default new Vuex.Store({
                         const myToken = myTokens[symbol];
                         const all = await myToken.allowance.call(
                             state.account.address,
-                            TOKENS[HARDCODED_CHAIN].rdai
+                            TOKENS[state.account.chainId].rdai
                         );
                         commit("SETALLOWANCE", {
                             symbol,
@@ -520,7 +520,7 @@ export default new Vuex.Store({
                 const maximum = SELF_HAT_ID;
                 var savedTxHash;
                 contracts.tokens[symbol]
-                    .approve(TOKENS[HARDCODED_CHAIN].rdai, maximum, {
+                    .approve(TOKENS[state.account.chainId].rdai, maximum, {
                         from: state.account.address
                     })
                     .on("transactionHash", hash => {
@@ -530,7 +530,7 @@ export default new Vuex.Store({
                             timestamp: new Date(),
                             type: "approve",
                             arg: {
-                                spender: TOKENS[HARDCODED_CHAIN].rdai,
+                                spender: TOKENS[state.account.chainId].rdai,
                                 maximum,
                                 symbol
                             },
@@ -573,6 +573,7 @@ export default new Vuex.Store({
                         });
                     })
                     .on("error", err => {
+                        console.log("fail in mint: ", err);
                         commit("ERROR", {
                             type: "transaction"
                         });
@@ -613,6 +614,7 @@ export default new Vuex.Store({
                         });
                     })
                     .on("error", err => {
+                        console.log("tx error: ", err);
                         commit("ERROR", {
                             type: "transaction"
                         });
@@ -839,6 +841,22 @@ export default new Vuex.Store({
         }
     },
     getters: {
+        chainName: state => {
+            switch (state.account.chainId) {
+                case 1:
+                    return "Mainnet";
+                case 3:
+                    return "Ropsten";
+                case 4:
+                    return "Rinkeby";
+                case 5:
+                    return "Goerli";
+                case 42:
+                    return "Kovan";
+                default:
+                    return "Private Chain";
+            }
+        },
         hasWeb3: state =>
             state.account.address.length === 42 && state.finishedLoading,
         isNewUser: (state, getters) =>

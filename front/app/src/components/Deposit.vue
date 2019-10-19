@@ -54,7 +54,7 @@
         </web3-btn>
       </v-flex>
       <v-flex xs12 mx-auto class="caption">
-        You keep rDAI, interest goes to {{interfaceHat.shortTitle || 'your chosen pool'}}
+        You keep rDAI, interest goes to {{interfaceHat.shortTitle === 'custom' ? 'your chosen pool' : (interfaceHat.shortTitle || 'your chosen pool')}}
       </v-flex>
     </v-layout>
   </v-container>

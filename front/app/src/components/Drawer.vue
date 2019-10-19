@@ -22,7 +22,7 @@
                 </v-list-item-action>
             </v-list-item>
         </template>
-        <v-flex text-center mb-4>
+        <v-flex text-center mb-4 v-if="chainName =='Rinkeby'">
           <web3-btn color="primary" action="getFaucetDAI" :params="{}">
             GET FAUCET DAI&nbsp;&nbsp;
             <token-svg :size="24" symbol="dai"/>
@@ -110,7 +110,7 @@ export default {
     }),
     computed: {
         ...mapState(['account', 'allHats' ]),
-        ...mapGetters(['userHat', 'rate', 'txList']),
+        ...mapGetters(['userHat', 'rate', 'txList', 'chainName']),
         donations() {
             return this.$route.name === 'donation'
         },
@@ -123,11 +123,12 @@ export default {
             })
         },
         editedTxList() {
+            const etherscan = this.chainName === 'Mainnet'? "https://etherscan.io" : `https://${this.chainName.toLowerCase()}.etherscan.io`;
             if(!this.txList) return [];
             return this.txList.map( i => {
                 i.conf = i.hasOwnProperty("confirmed") ? true : false;
                 i.err = i.hasOwnProperty("error") ? true : false;
-                i.link = `https://rinkeby.etherscan.io/tx/${i.txHash}`;
+                i.link = `${etherscan}/tx/${i.txHash}`;
                 const found = this.allHats.find( b => b.hatID === i.arg.hatID);
                 switch (i.type) {
                     case "getFaucetDAI":
