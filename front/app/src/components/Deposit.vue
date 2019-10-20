@@ -83,7 +83,7 @@ export default {
   computed:{
     ...mapState(['interfaceHat']),
     ...mapGetters(['userHat', 'userBalances','userAllowances']),
-    hatSelected() { return this.hat.proportions.length >= 2},
+    hatSelected() { return this.hat.proportions.length >= 1},
     needsUnlock() { return this.userAllowances.dai.length <= (this.amount.toString()).length},
     hatKind(){
       if(this.hat.hasOwnProperty("shortTitle")) return "featured";

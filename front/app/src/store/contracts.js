@@ -24,7 +24,6 @@ const contracts = {
             Object.keys(tokens).map(async token => {
                 console.log(`Loading token ${token} at ${tokens[token]}`);
                 tokensTemp[token] = await this.IERC20.at(tokens[token]);
-                console.log(`Token ${token} loaded`);
             })
         );
         this.tokens = tokensTemp;

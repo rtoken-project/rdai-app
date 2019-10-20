@@ -4,6 +4,10 @@
     fill-height
     pa-0
     >
+    <v-flex text-center mt-4>
+      <h3>Lookup interest</h3>
+      <p>Find out if an address has accrued any interest</p>
+    </v-flex>
     <v-flex sm8 shrink mx-auto text-xs-center>
       <v-text-field
         label="Beneficiary"

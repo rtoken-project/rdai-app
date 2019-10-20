@@ -14,37 +14,50 @@
         :class="{'wrap': $vuetify.breakpoint.smAndDown, 'nowrap': $vuetify.breakpoint.mdAndUp}"
         >
         <v-flex class="text-sm-center title my-auto pr-1">
-          <span v-if="isMyHat">Current Pool:</span>
+          <span v-if="hasPropHat">Pool:</span>
+          <span v-else-if="isMyHat">Current Pool:</span>
           <span v-else>Switch to new pool:</span>
         </v-flex>
       </v-layout>
       <v-layout wrap align-center mr-4 subtitle-2>
-        <template v-for="(item, i) in interfaceHat.length" md12>
+        <template v-if="displayHat.hatID === -666">
+          <v-flex xs12>
+            <v-layout class="text-center">
+              SELF
+            </v-layout>
+          </v-flex>
+        </template>
+        <template v-else-if="displayHat.hatID === 0">
+          <v-flex xs12 text-center>
+              No pool
+          </v-flex>
+        </template>
+        <template v-else v-for="(item, i) in displayHat.length" md12>
           <v-flex xs12 row>
             <v-layout nowrap>
               <v-flex grow nowrap text-left
                 >
-                  <template v-if="interfaceHat.hasOwnProperty('featured') && interfaceHat.featured[i]">
-                    {{ interfaceHat.featured[i] }}
+                  <template v-if="displayHat.hasOwnProperty('featured') && displayHat.featured[i]">
+                    {{ displayHat.featured[i] }}
                   </template>
                   <template v-else-if="$vuetify.breakpoint.smAndDown">
-                    {{ interfaceHat.recipients[i] | formatAddress }}
+                    {{ displayHat.recipients[i] | formatAddress }}
                   </template>
                   <template v-else>
-                    {{ interfaceHat.recipients[i] }}
+                    {{ displayHat.recipients[i] }}
                   </template>
               </v-flex>
-              <v-flex text-right>
-                {{ (interfaceHat.proportions[i]/interfaceHat.totalProportions*100).toFixed(2) }}%
+              <v-flex text-right ml-3>
+                {{ (displayHat.proportions[i]/displayHat.totalProportions*100).toFixed(2) }}%
               </v-flex>
             </v-layout>
           </v-flex>
           <v-divider hidden-md-and-up />
         </template>
       </v-layout>
-      <bar-chart v-if="interfaceHat.length>1" :hat="interfaceHat" />
-      <v-flex xs12 my-5 v-if="interfaceHat.hatID !== userHat.hatID">
-        <web3-btn action="changeHat" :params="{hatID: interfaceHat.hatID}">
+      <bar-chart v-if="displayHat.length>1" :hat="displayHat" />
+      <v-flex xs12 my-5 v-if="displayHat.hatID !== userHat.hatID && displayHat.hatID > 0">
+        <web3-btn action="changeHat" :params="{hatID: displayHat.hatID}">
           Switch to this pool
         </web3-btn>
       </v-flex>
@@ -82,12 +95,25 @@ import randomColor from '../colors';
 
 export default {
   name: 'app-custom-hat',
+  props: {
+    hat: {
+      type: Object,
+      default: undefined
+    }
+  },
   computed: {
     ...mapGetters(['userAddress', 'hasWeb3', 'userHat']),
     ...mapState(['allHats', 'interfaceHat']),
     isMyHat(){
       return this.userHat.hatID === this.interfaceHat.hatID
     },
+    displayHat(){
+      if(this.hasPropHat) return this.hat;
+      else return this.interfaceHat;
+    },
+    hasPropHat(){
+      return typeof this.hat !== 'undefined';
+    }
   }
 }
 </script>

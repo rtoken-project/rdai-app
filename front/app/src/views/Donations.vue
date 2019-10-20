@@ -35,14 +35,14 @@
                             <span v-else-if="userHat.hatID">Choose this pool</span>
                             <span v-else>Donate now!</span>
                         </v-btn>
-                        <v-flex v-if="i.hasOwnProperty('loans') && i.hatID === rDAIdevs.hatID">
+                        <!--v-flex v-if="i.hasOwnProperty('loans') && i.hatID === rDAIdevs.hatID">
                             {{ i.loans[0] | formatNumber(2) + 'DAI'}}
                             <span class="caption"> deposited so far</span>
                         </v-flex>
                         <v-flex v-else-if="i.hasOwnProperty('loans') && i.totalLoan > i.loans[0]">
                             {{i.totalLoan - i.loans[0] | formatNumber(2) + ' DAI'}}
                             <span class="caption"> deposited so far</span>
-                        </v-flex>
+                        </v-flex-->
                     </v-card>
                 </v-flex>
             </v-flex>

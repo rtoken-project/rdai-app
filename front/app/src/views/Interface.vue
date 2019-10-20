@@ -51,6 +51,7 @@
             value="interest"
             >
             <app-interest />
+            <app-lookup-hat />
           </v-tab-item>
         </v-tabs>
       </v-flex>
@@ -84,6 +85,7 @@ import Interest from '../components/Interest.vue';
 import CreateHat from '../components/CreateHat.vue';
 import CustomHat from '../components/CustomHat.vue';
 import FeaturedHat from '../components/FeaturedHat.vue';
+import LookupHat from '../components/LookupHat.vue';
 import Donations from './Donations.vue';
 import router from "../router.js";
 
@@ -96,7 +98,8 @@ export default {
       'app-featured-hat': FeaturedHat,
       'app-create-hat': CreateHat,
       'app-custom-hat': CustomHat,
-      'app-donations': Donations
+      'app-donations': Donations,
+      'app-lookup-hat': LookupHat
   },
   data: () => ({
       web3modal: false,

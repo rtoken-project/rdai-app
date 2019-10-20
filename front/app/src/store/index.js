@@ -12,10 +12,7 @@ import {
 
 Vue.use(Vuex);
 
-const SELF_HAT_ID = new BN("10", 2)
-    .pow(new BN("100", 16))
-    .sub(new BN("1", 2))
-    .toString();
+const SELF_HAT_ID = "115792089237316195423570985008687907853269984665640564039457584007913129639935";
 const HARDCODED_CHAIN = 1;
 const TOKENS = {
     1: {
@@ -57,8 +54,13 @@ const fromDec = function(num, symbol = "dai", format = "string") {
     if (format === "number") return parseFloat(fixed);
     else return fixed;
 };
-const fillHat = function(hat, hatID) {
-    const id = hatID || hat.hatID.toNumber();
+const fillHat = function(hat, hatID = false) {
+    let id;
+    // console.log("hat: ", hat);
+    if (hatID) id = hatID;
+    else if (hat.hatID.toString() === SELF_HAT_ID) id = -666;
+    else id = hat.hatID.toNumber();
+    // console.log("id after assignment: ", id);
     const { recipients, proportions } = hat;
     const cleanedResult = {
         hatID: id,
@@ -211,7 +213,7 @@ export default new Vuex.Store({
                             await ethereum.enable();
                         } catch (error) {
                             commit("SETLOADING", false);
-                            console.log("error here 1, ", error);
+                            // console.log("error here 1, ", error);
                             reject(false);
                             // User denied account access...
                         }
@@ -224,19 +226,19 @@ export default new Vuex.Store({
                             text:
                                 "To use this app, you will need a web3 enabled browser"
                         });
-                        console.log("error here");
+                        // console.log("error here");
                         reject(false);
                     }
-                    console.log("web3: ", web3);
+                    // console.log("web3: ", web3);
                     const p = await web3.currentProvider.enable();
-                    console.log("enabled? ", p);
+                    // console.log("enabled? ", p);
                     const chainId = await web3.eth.net.getId();
                     commit("SETCHAINID", chainId);
                     try {
                         await contracts.init(window.web3, TOKENS, chainId);
                     } catch (e) {
                         commit("SETLOADING", false);
-                        console.log("error is on contract.init", e);
+                        // console.log("error is on contract.init", e);
                         reject(false);
                     }
                     commit(
@@ -258,7 +260,7 @@ export default new Vuex.Store({
                     commit("SETLOADING", false);
                     resolve(true);
                 } catch (err) {
-                    console.log("error in activateWeb3:", err);
+                    // console.log("error in activateWeb3:", err);
                     commit("SETLOADING", false);
                     commit("ERROR", {
                         text:
@@ -290,21 +292,23 @@ export default new Vuex.Store({
         },
         async getAllHats({ dispatch, commit }) {
             const allHats = [];
-            var maxHat = 20;
+            var maxHat = 1;
+            /*
             try {
-                maxHat =
-                    parseInt(await contracts.functions.getMaximumHatID.call()) +
-                    1;
-                console.debug("maxHat", maxHat.toString());
+                maxHat = parseInt(
+                    await contracts.functions.getMaximumHatID.call()
+                );
+                // console.debug("maxHat", maxHat.toString());
             } catch (e) {
-                console.log(" error trying to get max hat number", e);
-            }
+                // console.log(" error trying to get max hat number", e);
+            }*/
+            maxHat = 7;
             try {
-                for (var hatID = 1; hatID < maxHat; hatID++) {
+                for (var hatID = 1; hatID <= maxHat; hatID++) {
                     const rawHat = await dispatch("getHatByID", {
                         hatID
                     });
-                    rawHat.loans = await Promise.all(
+                    /*rawHat.loans = await Promise.all(
                         rawHat.recipients.map(i =>
                             dispatch("receivedLoanOf", {
                                 address: i
@@ -314,7 +318,7 @@ export default new Vuex.Store({
                     rawHat.totalLoan = rawHat.loans.reduce(
                         (a, b) => parseFloat(a) + parseFloat(b),
                         0
-                    );
+                    );*/
                     const fullHat = {
                         ...rawHat,
                         ...featured.filter(i => i.hatID === hatID)[0]
@@ -340,7 +344,7 @@ export default new Vuex.Store({
                     allHats.push(fullHat);
                 }
             } catch (e) {
-                console.error("dispatch threw error e: ", e);
+                // console.error("dispatch threw error e: ", e);
             }
             commit("SETFINISHEDLOADING");
             commit("SETALLHATS", allHats);
@@ -453,7 +457,7 @@ export default new Vuex.Store({
                         resolve(true);
                     })
                     .catch(err => {
-                        console.log("error in getUserHat, e:", e);
+                        // console.log("error in getUserHat, e:", err);
                         reject(err);
                     });
             });
@@ -508,7 +512,7 @@ export default new Vuex.Store({
                         reject({ savedTxHash });
                     })
                     .then(receipt => {
-                        console.log("now what? receipt: ", receipt);
+                        // console.log("now what? receipt: ", receipt);
                         if (switchToThisHat) dispatch("getUserHat");
                         dispatch("getAllHats");
                         resolve(receipt);
@@ -538,14 +542,14 @@ export default new Vuex.Store({
                         });
                     })
                     .on("error", err => {
-                        console.warn("token.approve failed", err);
+                        // console.warn("token.approve failed", err);
                         commit("ERROR", {
                             type: "transaction"
                         });
                         reject({ savedTxHash });
                     })
                     .then(receipt => {
-                        console.log("now what? receipt: ", receipt);
+                        // console.log("now what? receipt: ", receipt);
                         dispatch("getAllowance", symbol);
                         resolve(receipt);
                     });
@@ -573,14 +577,14 @@ export default new Vuex.Store({
                         });
                     })
                     .on("error", err => {
-                        console.log("fail in mint: ", err);
+                        // console.log("fail in mint: ", err);
                         commit("ERROR", {
                             type: "transaction"
                         });
                         reject({ savedTxHash });
                     })
                     .then(receipt => {
-                        console.log("now what? receipt: ", receipt);
+                        // console.log("now what? receipt: ", receipt);
                         dispatch("getBalance", "dai");
                         dispatch("getBalance", "rdai");
                         resolve(receipt);
@@ -614,14 +618,14 @@ export default new Vuex.Store({
                         });
                     })
                     .on("error", err => {
-                        console.log("tx error: ", err);
+                        // console.log("tx error: ", err);
                         commit("ERROR", {
                             type: "transaction"
                         });
                         reject({ savedTxHash });
                     })
                     .then(receipt => {
-                        console.log("now what? receipt: ", receipt);
+                        // console.log("now what? receipt: ", receipt);
                         dispatch("getBalance", "dai");
                         dispatch("getBalance", "rdai");
                         dispatch("getUserHat");
@@ -660,7 +664,7 @@ export default new Vuex.Store({
                         reject({ savedTxHash });
                     })
                     .then(receipt => {
-                        console.log("now what? receipt: ", receipt);
+                        // console.log("now what? receipt: ", receipt);
                         dispatch("getBalance", "dai");
                         dispatch("getBalance", "rdai");
                         dispatch("getUserHat");
@@ -694,7 +698,7 @@ export default new Vuex.Store({
                         reject({ savedTxHash });
                     })
                     .then(receipt => {
-                        console.log("now what? receipt: ", receipt);
+                        // console.log("now what? receipt: ", receipt);
                         dispatch("getUserHat");
                         resolve(receipt);
                     });
@@ -726,7 +730,7 @@ export default new Vuex.Store({
                         reject({ savedTxHash });
                     })
                     .then(receipt => {
-                        console.log("now what? receipt: ", receipt);
+                        // console.log("now what? receipt: ", receipt);
                         dispatch("getBalance", "dai");
                         dispatch("getBalance", "rdai");
                         resolve(receipt);
@@ -748,7 +752,7 @@ export default new Vuex.Store({
         ) {
             return new Promise((resolve, reject) => {
                 var savedTxHash;
-                console.log("paying interest of this account: ", address);
+                // console.log("paying interest of this account: ", address);
                 contracts.functions
                     .payInterest(address, {
                         from: state.account.address
@@ -772,7 +776,7 @@ export default new Vuex.Store({
                         reject({ savedTxHash });
                     })
                     .then(receipt => {
-                        console.log("now what? receipt: ", receipt);
+                        // console.log("now what? receipt: ", receipt);
                         dispatch("getBalance", "dai");
                         dispatch("getBalance", "rdai");
                         resolve(receipt);
@@ -833,7 +837,7 @@ export default new Vuex.Store({
                         reject({ savedTxHash });
                     })
                     .then(receipt => {
-                        console.log("now what? receipt: ", receipt);
+                        // console.log("now what? receipt: ", receipt);
                         dispatch("getBalance", "dai");
                         resolve(receipt);
                     });

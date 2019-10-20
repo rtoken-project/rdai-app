@@ -11,7 +11,7 @@ const featured = [
         shortTitle: "rDAIdevs",
         description:
             "The rToken dev fund was created to build and maintain the rToken protocol into the future of DeFi.",
-        address: "0x08550C75707DA817c68F7e31A9659f0B3963f991",
+        address: "0x5d7d257d97d8a81f51187a77c6dd226fb8424d90",
         colors: ["#F7997C", "#F7997C"],
         color: "#F7997C",
         hatID: 1
@@ -23,7 +23,7 @@ const featured = [
         description:
             "Set a custom beneficiary and give the interest to anyone you want",
         address: "0x0",
-        hatID: 0
+        hatID: 9990
     },
     {
         image: require("./assets/charity.svg"),
@@ -43,7 +43,7 @@ const featured = [
         address: "0xA19FCDaD77C1F0fd184689aca88BabCF68010347",
         colors: ["#F7997C", "#0a0036"],
         color: "#0a0036",
-        hatID: 2 //real
+        hatID: 3
     },
     {
         image: require("./assets/giveth.png"),
@@ -54,7 +54,7 @@ const featured = [
         address: "0x8f951903c9360345b4e1b536c7f5ae8f88a64e79",
         colors: ["#F7997C", "#2f0340"],
         color: "#2f0340",
-        hatID: 3 //real
+        hatID: 4
     },
     {
         image: require("./assets/BFVI.jpg"),
@@ -65,7 +65,7 @@ const featured = [
         address: "0x5f48465bb9a29a3904a8d320146e78640df0e96e",
         colors: ["#F7997C", "#f79430"],
         color: "#f79430",
-        hatID: 4 // real
+        hatID: 5
     },
     {
         image: require("./assets/ethberlinzwei.svg"),
@@ -73,17 +73,6 @@ const featured = [
         shortTitle: "EthBerlin",
         description:
             "All funds are sent to ETHBerlin to fund Scholarships for the EthBerlinZwei hackathon.",
-        address: "0x82338B1b27cfC0C27D79c3738B748f951Ab1a7A0",
-        colors: ["#F7997C", "#ffd200"],
-        color: "#ffd200",
-        hatID: 5 //real
-    },
-    {
-        image: require("./assets/radicalxchange.png"),
-        title: "RadicalXchange Foundation",
-        shortTitle: "RadicalXchange",
-        description:
-            "Together, building markets and technologies truer to the richness of our diversely shared lives.",
         address: "0x82338B1b27cfC0C27D79c3738B748f951Ab1a7A0",
         colors: ["#F7997C", "#ffd200"],
         color: "#ffd200",
@@ -99,6 +88,17 @@ const featured = [
         colors: ["#F7997C", "#28689e"],
         color: "#28689e",
         hatID: 7
-    }
+    },
+    {
+        image: require("./assets/radicalxchange.png"),
+        title: "RadicalXchange Foundation",
+        shortTitle: "RadicalXchange",
+        description:
+            "Together, building markets and technologies truer to the richness of our diversely shared lives.",
+        address: "0x82338B1b27cfC0C27D79c3738B748f951Ab1a7A0",
+        colors: ["#F7997C", "#ffd200"],
+        color: "#ffd200",
+        hatID: 996
+    },
 ];
 export default featured;
