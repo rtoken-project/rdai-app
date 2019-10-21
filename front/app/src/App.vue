@@ -8,7 +8,7 @@
       src="./assets/logo.svg"
       lazy-src="./assets/logo.svg"
       aspect-ratio="1"
-      class="pa-2"
+      class="pa-2 cursor"
       contain
       max-width="50"
       max-height="50"

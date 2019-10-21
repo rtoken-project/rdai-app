@@ -82,7 +82,7 @@ export default {
           this.$emit("btn-clicked");
           this.loading = true;
           const cleanedParams = typeof this.params === 'undefined' ? [ this.action ] : [ this.action, this.params ];
-          //console.log("this is getting passed to dispatch: ", ...cleanedParams);
+          console.log("this is getting passed to dispatch: ", ...cleanedParams);
           this.$store.dispatch(...cleanedParams)
               .then(result => {
                   this.$emit("then", result);

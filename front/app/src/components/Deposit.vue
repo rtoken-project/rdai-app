@@ -97,15 +97,15 @@ export default {
           return `Mint rDAI`
           break;
         case "mintWithSelectedHat":
-          if(this.hatKind === "featured") return `Mint more rDAI and switch to ${this.interfaceHat.shortTitle}`;
-          else return `Mint more rDAI and switch to pool #${this.interfaceHat.hatID} `;
+          if(this.hatKind === "featured") return `Mint rDAI and switch to ${this.interfaceHat.shortTitle}`;
+          else return `Mint rDAI and switch to pool #${this.interfaceHat.hatID} `;
         default:
           return 'Donate to NEW pool';
       }
     },
     mintOrWhat(){
-      if(this.userHat && this.hat.hasOwnProperty("hatID")){
-         if(this.userHat.hatID === this.hat.hatID) return "mint";
+      if(this.hat.hasOwnProperty("hatID")){
+         if(this.userHat && his.userHat.hatID === this.hat.hatID) return "mint";
          else return "mintWithSelectedHat";
       }
       else return "mintWithNewHat";
