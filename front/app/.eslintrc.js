@@ -1,18 +1,15 @@
 module.exports = {
     root: true,
     env: {
-      "node": true
+        node: true,
+    },
+    parserOptions: {
+        ecmaVersion: 2017,
     },
     extends: [
       "plugin:vue/essential",
       "@vue/prettier"
     ],
-    parserOptions: {
-        "ecmaVersion": 2018,
-        "ecmaFeatures": {
-            "experimentalObjectRestSpread": true
-        }
-    },
     globals: {
         "web3": true,
         "ethereum": true

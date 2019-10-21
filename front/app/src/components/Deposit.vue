@@ -105,7 +105,7 @@ export default {
     },
     mintOrWhat(){
       if(this.hat.hasOwnProperty("hatID")){
-         if(this.userHat && his.userHat.hatID === this.hat.hatID) return "mint";
+         if(this.userHat && this.userHat.hatID === this.hat.hatID) return "mint";
          else return "mintWithSelectedHat";
       }
       else return "mintWithNewHat";
