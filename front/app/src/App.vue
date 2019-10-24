@@ -50,7 +50,7 @@
       <a href="https://twitter.com/rDAI_dao" target="_blank" style="text-decoration: none;color:rgb(29, 161, 242)"><v-icon style="color:rgb(29, 161, 242)">fab fa-twitter</v-icon>@rDAI_dao</a>
       <v-spacer />
       <span class="text-sm-right grey--text">
-        {{ new Date().getFullYear() }} - <a href="http://decentral.ee" class="grey--text" style="text-decoration:none;">Decentral.ee</a>
+        {{ new Date().getFullYear() }} - <a href="https://www.decentral.ee" class="grey--text" style="text-decoration:none;">Decentral.ee</a>
       </span>
     </v-footer>
   </v-app>
