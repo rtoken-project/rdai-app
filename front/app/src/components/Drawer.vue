@@ -11,7 +11,7 @@
                 </v-list-item-avatar>
                 <v-list-item-content>
                     <v-list-item-title class="text-xs-justify">
-                        {{ item.text }}<strong> {{ item.balance }}</strong>
+                        {{ item.text }}<strong> {{ item.balance | formatNumber(4) }}</strong>
                     </v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-action v-if="item.symbol !== 'eth'">

@@ -155,6 +155,7 @@ export default {
         if(newV){
             if(this.web3modal){
                 if(this.$route.params.hasOwnProperty("hatID")){
+                    console.log('route params: ', this.$route.params);
                     this.$store.dispatch("setInterfaceHat", {hatID : this.$route.params.hatID});
                     this.tab = "deposit";
                 } else if(this.$route.params.hasOwnProperty("shortTitle")){

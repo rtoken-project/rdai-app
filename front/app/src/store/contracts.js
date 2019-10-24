@@ -13,7 +13,7 @@ const contracts = {
         this.IRToken = contracts.IRToken;
         this.IERC20 = contracts.IERC20;
         this.functions = await this.IRToken.at(tokens.rdai);
-        if (chainId == 42) {
+        if (chainId == 4) {
             this.faucet = await contracts.RinkebyTestDAI.at(
                 "0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa"
             );

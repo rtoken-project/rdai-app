@@ -16,7 +16,7 @@
         <v-flex class="text-sm-center title my-auto pr-1 py-3 pb-5">Select Beneficiaries</v-flex>
       </v-layout>
       <v-layout wrap align-center mr-4 subtitle-2>
-        <template v-for="(item, i) in hatInCreation.proportions" md12 v-if="i!==0">
+        <template v-for="(item, i) in hatInCreation.proportions" md12 v-if="hatInCreation.recipients[i].toLowerCase() !== commissionAddress">
           <v-flex xs12 row>
             <v-layout nowrap>
               <v-flex sm1 xs1 d-inline mr-2 class="minus-top-8"
@@ -82,14 +82,49 @@
           </v-text-field>
         </v-flex>
       </v-layout>
-      <bar-chart :hat="hatInCreation" showCommission v-if="hatInCreation.length > 1" />
+      <bar-chart :hat="hatInCreation" :showCommission="addCommission" v-if="hatInCreation.length > 1" />
+      <v-flex xs12 mx-auto text-center my-0>
+        <v-switch
+          @click.stop="addCommissionClicked"
+          :value="addCommission"
+          class="justify-center my-0"
+          :label="commissionLabel"
+          :disabled="hasWeb3 === false"
+        />
+      </v-flex>
       <v-flex xs12 mx-auto text-center my-0 v-if="userHat && userAddress.toLowerCase() === userHat.recipients[0].toLowerCase()">
         <v-switch v-model="switchToThisHat" class="justify-center my-0" :label="label" :disabled="hasWeb3 === false" />
       </v-flex>
       <v-flex xs12 py-3 >
-        <web3-btn action="createHat" :disabled="hatInCreation.length < 2" :params="{switchToThisHat}" @then="goToCustom">Create new Pool</web3-btn>
+        <web3-btn action="createHat" :disabled="addCommission? hatInCreation.length < 1 : hatInCreation < 2" :params="{switchToThisHat}" @then="goToCustom">Create new Pool</web3-btn>
       </v-flex>
     </v-sheet>
+    <v-dialog v-model="commissionModal" persistent max-width="340">
+      <v-card class="pa-4">
+        <v-card-title class="headline">Remove rDai DAO donation?</v-card-title>
+        <v-card-text class="mt-4">
+          <p>
+            The 5% donation to rDai DAO is equal to only {{ rate / 20 | formatNumber(2) }}% a year.
+          </p>
+          <p>
+            While this might be a small change for you, it is the only way we can fund continued development of rDAI.
+          </p>
+          <p>
+            If you still want to remove it, please consider donating to our DAO directly.
+          </p>
+          <p>
+            Check out how we use funds and make a donation through our <a href="https://mainnet.aragon.org/#/rdao/0xc281d4fe88701bf30326b3bcb2c3eb73669d3b91" target="_blank">Aragon DAO.</a>
+          </p>
+        </v-card-text>
+        <v-card-actions
+          @click="commissionModal = false"
+          class="row px-8"
+          >
+          <v-btn color="primary" block>Keep donation</v-btn>
+          <v-btn @click="addCommission=false" block class="ml-0 mt-2">Remove Donation</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -131,7 +166,10 @@ export default {
     switchToThisHat: true,
     localProportions: [],
     localAlerts: [],
-    savedUserHat: 0
+    savedUserHat: 0,
+    addCommission: true,
+    commissionAddress: featured[0].address.toLowerCase(),
+    commissionModal: false
   }),
   computed: {
     ...mapGetters(['userAddress', 'hasWeb3', 'userHat']),
@@ -139,12 +177,66 @@ export default {
     label(){
       return this.switchToThisHat ? 'Switch to new pool' : 'Keep current pool'
     },
+    commissionLabel(){
+      return this.addCommission ? 'Donate 5% of the interest to the rDAI dev DAO' : 'Keep all of the interest';
+    },
+    rate(){
+      return Math.round(this.$store.state.exchangeRate * 10000) / 100;
+    }
+  },
+  watch: {
+    newAddress(newVal, oldVal){
+      if(newVal.length === 42 && oldVal < newVal){
+        this.addRecipient(newVal);
+      }
+    },
+    hatInCreation:{
+      handler: function( newVal ){
+        if(this.addCommission){
+          if(newVal.proportions[0] === newVal.totalProportions / 20) return;
+          const hat = newVal;
+          hat.proportions[0] = (newVal.totalProportions - newVal.proportions[0])/ 19;
+          hat.totalProportions = hat.proportions.reduce((a,b)=>a+b,0);
+          this.setHat(hat);
+        }
+      },
+      deep: true
+    },
+    localProportions: {
+      handler: function( newVal ){
+        if(this.addCommission){
+          const hat = this.hatInCreation;
+          hat.proportions = newVal;
+          hat.proportions[0] = (newVal.reduce((a,b)=>a+b,0) - newVal[0])/ 19;
+          hat.totalProportions = hat.proportions.reduce((a,b)=>a+b,0);
+          this.$store.commit("SETHATINCREATION", hat);
+        }
+      },
+      deep: true
+    },
+    addCommission(newVal, oldVal){
+      if(!newVal){
+        if(this.hatInCreation.recipients[0].toLowerCase() === featured[0].address.toLowerCase() ) this.removeRecipient(0);
+      }
+      else{
+        this.addCommissionBeneficiary();
+      }
+    }
   },
   methods: {
-    ...mapActions(['createHat']),
     setHat(hat){
       this.localProportions = hat.proportions;
+      hat.length = hat.proportions.length;
+      hat.totalProportions = hat.proportions.reduce((a,b)=>a+b, 0);
       this.$store.commit("SETHATINCREATION",hat);
+    },
+    addCommissionClicked(e){
+      if(this.addCommission){
+        this.commissionModal = true;
+      }
+      else{
+        this.addCommission = true;
+      }
     },
     alertToFalse(index){
       const newArray = [];
@@ -157,13 +249,10 @@ export default {
     async addRecipient(){
       if(this.newAddress.length !== 42 || !isAddress(this.newAddress)) return;
       const hat = this.hatInCreation;
-      console.log(hat);
       hat.proportions.push(1900);
       hat.recipients.push(this.newAddress);
       if((await web3.eth.getCode(this.newAddress))==='0x') this.localAlerts.push(false);
       else this.localAlerts.push(true);
-      hat.length = hat.proportions.length;
-      hat.totalProportions = hat.proportions.reduce((a,b)=>a+b, 0);
       const hasColor = featured.filter(i=> i.address === this.newAddress)[0];
       if(typeof hasColor !== 'undefined') hat.colors.push(hasColor.color);
       else hat.colors.push(randomColor(hat.colors));
@@ -175,48 +264,33 @@ export default {
       hat.proportions.splice(index, 1);
       hat.recipients.splice(index, 1);
       hat.colors.splice(index, 1);
-      hat.length-= 1;
-      hat.totalProportions = hat.proportions.reduce((a,b)=>a+b,0);
+      this.localAlerts.splice(index, 1);
       this.setHat(hat);
     },
     goToCustom(ok){
       this.$router.replace("/deposit");
-    }
-  },
-  watch: {
-    newAddress(newVal, oldVal){
-      if(newVal.length === 42 && oldVal < newVal){
-        this.addRecipient(newVal);
+    },
+    addCommissionBeneficiary(){
+      const hat = this.hatInCreation;
+      if(this.hatInCreation.length === 0){
+        return this.setHat( {
+          proportions: [100],
+          recipients: [featured[0].address],
+          colors: [featured[0].color],
+        });
       }
-    },
-    hatInCreation:{
-      handler: function( newVal ){
-        const hat = newVal;
-        if(newVal.proportions[0] === newVal.totalProportions / 20) return;
-        hat.proportions[0] = (newVal.totalProportions - newVal.proportions[0])/ 19;
-        hat.totalProportions = hat.proportions.reduce((a,b)=>a+b,0);
-        this.setHat(hat);
-      },
-      deep: true
-    },
-    localProportions: {
-      handler: function( newVal ){
-        const hat = this.hatInCreation;
-        hat.proportions = newVal;
-        hat.proportions[0] = (newVal.reduce((a,b)=>a+b,0) - newVal[0])/ 19;
-        hat.totalProportions = hat.proportions.reduce((a,b)=>a+b,0);
-        this.$store.commit("SETHATINCREATION", hat);
-      },
-      deep: true
+      hat.proportions.unshift(100);
+      hat.recipients.unshift(featured[0].address);
+      hat.colors.unshift(featured[0].color);
+      this.localAlerts.unshift(false);
+      this.setHat(hat);
     }
   },
   mounted(){
     this.setHat( {
-      length:1,
-      proportions: [100],
+      proportions: [ 100 ],
       recipients: [featured[0].address],
       colors: [featured[0].color],
-      totalProportions: 100,
     });
     this.localAlerts = [false];
     this.savedUserHat = this.userHat.hatID

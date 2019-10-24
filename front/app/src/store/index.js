@@ -305,43 +305,7 @@ export default new Vuex.Store({
             maxHat = 7;
             try {
                 for (var hatID = 1; hatID <= maxHat; hatID++) {
-                    const rawHat = await dispatch("getHatByID", {
-                        hatID
-                    });
-                    /*rawHat.loans = await Promise.all(
-                        rawHat.recipients.map(i =>
-                            dispatch("receivedLoanOf", {
-                                address: i
-                            })
-                        )
-                    );
-                    rawHat.totalLoan = rawHat.loans.reduce(
-                        (a, b) => parseFloat(a) + parseFloat(b),
-                        0
-                    );*/
-                    const fullHat = {
-                        ...rawHat,
-                        ...featured.filter(i => i.hatID === hatID)[0]
-                    };
-                    fullHat.hatID = hatID;
-                    if (!fullHat.hasOwnProperty("colors")) {
-                        fullHat.featured = fullHat.recipients.map(i => {
-                            const f = featured.filter(
-                                b => b.address.toLowerCase() === i.toLowerCase()
-                            );
-                            return f.length > 0 ? f[0].title : false;
-                        });
-                        const colors = [];
-                        fullHat.colors = fullHat.recipients.map(i => {
-                            const f = featured.filter(
-                                b => b.address.toLowerCase() === i.toLowerCase()
-                            );
-                            return f.length > 0
-                                ? f[0].color
-                                : randomColor(colors);
-                        });
-                    }
-                    allHats.push(fullHat);
+                    allHats.push(await dispatch("getFullHat", { hatID }));
                 }
             } catch (e) {
                 // console.error("dispatch threw error e: ", e);
@@ -349,17 +313,55 @@ export default new Vuex.Store({
             commit("SETFINISHEDLOADING");
             commit("SETALLHATS", allHats);
         },
+        getFullHat({ dispatch }, { hatID }) {
+            return new Promise(async resolve => {
+                const rawHat = await dispatch("getHatByID", {
+                    hatID
+                });
+                /*rawHat.loans = await Promise.all(
+                    rawHat.recipients.map(i =>
+                        dispatch("receivedLoanOf", {
+                            address: i
+                        })
+                    )
+                );
+                rawHat.totalLoan = rawHat.loans.reduce(
+                    (a, b) => parseFloat(a) + parseFloat(b),
+                    0
+                );*/
+                const fullHat = {
+                    ...rawHat,
+                    ...featured.filter(i => i.hatID === hatID)[0]
+                };
+                fullHat.hatID = hatID;
+                if (!fullHat.hasOwnProperty("colors")) {
+                    fullHat.featured = fullHat.recipients.map(i => {
+                        const f = featured.filter(
+                            b => b.address.toLowerCase() === i.toLowerCase()
+                        );
+                        return f.length > 0 ? f[0].title : false;
+                    });
+                    const colors = [];
+                    fullHat.colors = fullHat.recipients.map(i => {
+                        const f = featured.filter(
+                            b => b.address.toLowerCase() === i.toLowerCase()
+                        );
+                        return f.length > 0 ? f[0].color : randomColor(colors);
+                    });
+                }
+                resolve(fullHat);
+            });
+        },
         setInterfaceHat(
-            { commit, state },
+            { commit, dispatch, state },
             { hatID = false, shortTitle = false }
         ) {
-            return new Promise(resolve => {
+            return new Promise(async resolve => {
                 if (hatID) {
+                    dispatch("getHatByID", { hatID: parseInt(hatID) });
                     commit(
                         "SETINTERFACEHAT",
-                        state.allHats.find(
-                            i => parseInt(i.hatID) === parseInt(hatID)
-                        )
+                        await dispatch("getFullHat", { hatID })
                     );
                     resolve(true);
                 } else if (shortTitle) {
@@ -395,17 +397,33 @@ export default new Vuex.Store({
                 });
             }
         },
-        getBalance({ commit, state }, symbol) {
+        getBalance({ commit, dispatch, state }, symbol) {
             if (symbol === "eth") return;
+            const address = state.account.address;
             new Promise(resolve => {
                 const getBalance = async () => {
                     const myTokens = contracts.tokens;
                     setTimeout(async () => {
                         const myToken = myTokens[symbol];
-                        const rawBal = await myToken.balanceOf.call(
-                            state.account.address
-                        );
-                        const bal = fromDec(rawBal, symbol);
+                        const rawBal = await myToken.balanceOf.call(address);
+                        var bal = fromDec(rawBal, symbol);
+                        console.log("bal: ", bal);
+                        if (symbol === "rdai") {
+                            console.log("just before interest calc");
+                            console.log(
+                                "interest: ",
+                                await dispatch("interestPayableOf", {
+                                    address: state.account.address
+                                })
+                            );
+                            bal =
+                                parseFloat(bal) +
+                                parseFloat(
+                                    await dispatch("interestPayableOf", {
+                                        address
+                                    })
+                                );
+                        }
                         if (bal === this.state.account.balances[symbol]) {
                             setTimeout(() => {
                                 getBalance();
@@ -813,6 +831,7 @@ export default new Vuex.Store({
         ) {
             return new Promise((resolve, reject) => {
                 var savedTxHash;
+                console.log("contracts: ", contracts);
                 contracts.faucet
                     .allocateTo(address, toWei("100", "ether"), {
                         from: state.account.address
