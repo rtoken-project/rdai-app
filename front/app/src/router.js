@@ -1,27 +1,18 @@
 import Vue from "vue";
 import Router from "vue-router";
 import featured from "./featured.js";
+import store from "./store/";
 
 Vue.use(Router);
 
-export default new Router({
+
+const router = new Router({
     mode: "history",
     routes: [
         {
-            path: "/create/",
-            name: "create",
-            component: () =>
-                import(/* webpackChunkName: "interface" */ "./views/Interface.vue")
-        },
-        {
-            path: "/choose",
-            name: "choose",
-            component: () =>
-                import(/* webpackChunkName: "interface" */ "./views/Interface.vue")
-        },
-        {
             path: "/deposit/:hatID?",
             name: "deposit",
+            props: true,
             beforeEnter: (to, from, next) => {
                 var shortTitle = featured.filter(
                     i => i.hatID === to.params.hatID
@@ -34,34 +25,60 @@ export default new Router({
                 }
             },
             component: () =>
-                import(/* webpackChunkName: "interface" */ "./views/Interface.vue")
+                import(/* webpackChunkName: "interface" */ "./views/Deposit.vue")
+        },
+        {
+            path: "/create",
+            name: "create",
+            component: () =>
+                import(/* webpackChunkName: "interface" */ "@/views/Create.vue")
         },
         {
             path: "/donate/:shortTitle",
             name: "donate",
-            /*beforeEnter: (to, from, next) => {
-                // ...
-            },*/
+            props: true,
             component: () =>
-                import(/* webpackChunkName: "interface" */ "./views/Interface.vue")
+                import(/* webpackChunkName: "interface" */ "./views/Deposit.vue")
         },
         {
             path: "/interest",
             name: "interest",
             component: () =>
-                import(/* webpackChunkName: "interface" */ "./views/Interface.vue")
+                import(/* webpackChunkName: "interface" */ "./views/Interest.vue")
         },
         {
             path: "/redeem",
             name: "redeem",
             component: () =>
-                import(/* webpackChunkName: "interface" */ "./views/Interface.vue")
+                import(/* webpackChunkName: "interface" */ "./views/Redeem.vue")
         },
         {
             path: "*",
-            name: "donation",
+            name: "choose",
             component: () =>
-                import(/* webpackChunkName: "donations" */ "./views/Donations.vue")
+                import(/* webpackChunkName: "donations" */ "./views/Choose.vue")
         }
     ]
 });
+
+
+router.beforeEach((to, from, next) => {
+    const { hasWeb3 } = store.getters;
+    const { web3modal } = store.state;
+    const { hatID, shortTitle } = to.params;
+    console.log("to: ", to);
+    if( !hasWeb3 && (to.name === 'donate' || to.name === 'deposit')){
+      store.commit('TOGGLEWEBMODAL', true);
+      store.commit('STOREURLHAT', {hatID, shortTitle});
+    };
+    next(true);
+});
+router.afterEach((to, from) => {
+    const { exchangeRate } = store.state;
+    if( exchangeRate <= 0){
+        console.log("first load of page");
+        store.dispatch("onPageLoad");
+    }
+});
+
+export default router;

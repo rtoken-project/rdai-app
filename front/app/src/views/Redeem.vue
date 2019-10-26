@@ -1,7 +1,6 @@
 <template>
   <v-layout center wrap py-5
     fluid
-    fill-height
     pa-0
     :class="{'wrap': $vuetify.breakpoint.smAndDown, 'nowrap': $vuetify.breakpoint.mdAndUp}"
     >
@@ -61,7 +60,7 @@ import vuex from 'vuex';
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
-  name: 'app-redeem',
+  name: 'redeem',
   props: {
   },
   data: () => ({

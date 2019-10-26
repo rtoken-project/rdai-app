@@ -72,7 +72,7 @@ import vuex from 'vuex';
 import {mapActions, mapState, mapGetters} from 'vuex';
 
 export default {
-  name: 'app-deposit',
+  name: 'mint',
   props: {
     hat: Object
   },
@@ -83,7 +83,7 @@ export default {
   computed:{
     ...mapState(['interfaceHat']),
     ...mapGetters(['userHat', 'userBalances','userAllowances']),
-    hatSelected() { return this.hat.proportions.length >= 1},
+    hatSelected() { return this.hat.hasOwnProperty("proportions") && this.hat.proportions.length >= 1},
     needsUnlock() { return this.userAllowances.dai.length <= (this.amount.toString()).length},
     hatKind(){
       if(this.hat.hasOwnProperty("shortTitle")) return "featured";

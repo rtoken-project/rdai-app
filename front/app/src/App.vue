@@ -29,7 +29,40 @@
     </v-app-bar>
 
     <v-content>
-      <router-view />
+      <v-container
+        fluid
+        fill-height
+        >
+        <v-layout wrap grid-list-sm>
+          <v-flex sm12 text-sm-center>
+            <v-tabs
+              v-model="tab"
+              light
+              centered
+              show-arrows
+              fixed-tabs
+            >
+              <v-tab to="/choose">
+                CHOOSE
+              </v-tab>
+              <v-tab to="/create" >
+                CREATE
+              </v-tab>
+              <v-tab to="/deposit" :disabled="!interfaceHat" >
+                DEPOSIT
+              </v-tab>
+              <v-tab to="/redeem" >
+                REDEEM
+              </v-tab>
+              <v-tab to="/interest" >
+                INTEREST
+              </v-tab>
+            </v-tabs>
+            <router-view />
+          </v-flex>
+        </v-layout>
+        <Web3Modal />
+      </v-container>
     </v-content>
 
     <v-navigation-drawer
@@ -63,11 +96,21 @@
   .cursor:hover{
     cursor: pointer;
   }
+  .round{
+    border-radius: 100%
+  }
+  .v-select__selections *{
+    font-size: 1.3em !important;
+  }
 </style>
 
 <script>
-  import Drawer from './components/Drawer.vue';
-  import Snackbar from './components/Snackbar.vue';
+  import Vue from 'vuex';
+  import router from "@/router.js";
+  import Drawer from '@/components/Drawer.vue';
+  import Snackbar from '@/components/Snackbar.vue';
+  import Interface from '@/views/Interface.vue';
+  import Web3Modal from '@/components/Web3Modal.vue';
   import Vuex from 'vuex';
   import {mapState, mapActions, mapGetters} from 'vuex';
   export default {
@@ -76,16 +119,19 @@
     },
     components: {
       'app-drawer': Drawer,
-      'app-snackbar': Snackbar
+      'app-snackbar': Snackbar,
+      Web3Modal
     },
     data: () => ({
+      tab: 'choose',
+      showLoader: true,
       drawer: true,
-      ...mapState(['account'])
     }),
     computed: {
-      ...mapGetters(['userAddress', 'hasWeb3', 'chainName']),
+      ...mapState(['account', 'allHats', 'hatInCreation', 'loadingPage', 'loadingWeb3']),
+      ...mapGetters(['userAddress', 'userHat', 'interfaceHat', 'hasWeb3', 'chainName', 'userBalances']),
       donations() {
-          return this.$route.name === 'donation'
+          return this.$route.name === 'donation' && this.userBalances.rdai <= 0
       },
     },
     methods: {
@@ -94,9 +140,6 @@
         if( this.$route.name ==='donation' ) return ;
         else this.$router.push('/choose');
       }
-    },
-    mounted(){
-      this.$store.dispatch("onPageLoad");
     }
   }
 </script>

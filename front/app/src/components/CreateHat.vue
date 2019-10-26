@@ -82,17 +82,16 @@
           </v-text-field>
         </v-flex>
       </v-layout>
-      <bar-chart :hat="hatInCreation" :showCommission="addCommission" v-if="hatInCreation.length > 1" />
-      <v-flex xs12 mx-auto text-center my-0>
+      <bar-chart :hat="hatInCreation" :showCommission="addCommission" v-if="hatStarted" />
+      <v-flex xs12 mx-auto my-0 v-if="hatStarted">
         <v-switch
           @click.stop="addCommissionClicked"
-          :value="addCommission"
-          class="justify-center my-0"
+          v-model="addCommission"
+          color="primary"
           :label="commissionLabel"
-          :disabled="hasWeb3 === false"
         />
       </v-flex>
-      <v-flex xs12 mx-auto text-center my-0 v-if="userHat && userAddress.toLowerCase() === userHat.recipients[0].toLowerCase()">
+      <v-flex xs12 mx-auto text-center my-0 v-if="allowCreatingOtherHats">
         <v-switch v-model="switchToThisHat" class="justify-center my-0" :label="label" :disabled="hasWeb3 === false" />
       </v-flex>
       <v-flex xs12 py-3 >
@@ -161,24 +160,25 @@ export default {
   name: 'app-create-hat',
   data: () => ({
     newAddress: '',
-    additions: [],
-    length: 1900,
     switchToThisHat: true,
     localProportions: [],
     localAlerts: [],
-    savedUserHat: 0,
     addCommission: true,
     commissionAddress: featured[0].address.toLowerCase(),
-    commissionModal: false
+    commissionModal: false,
+    allowCreatingOtherHats: false
   }),
   computed: {
     ...mapGetters(['userAddress', 'hasWeb3', 'userHat']),
-    ...mapState(['hatInCreation']),
+    ...mapState(['hatInCreation', 'loadingWeb3']),
+    hatStarted(){
+      return this.localProportions.length > (this.addCommission ?  1 : 0)
+    },
     label(){
       return this.switchToThisHat ? 'Switch to new pool' : 'Keep current pool'
     },
     commissionLabel(){
-      return this.addCommission ? 'Donate 5% of the interest to the rDAI dev DAO' : 'Keep all of the interest';
+      return this.addCommission ? 'Donating 5% of the interest to the rDAI dev DAO' : 'Keeping all of the interest';
     },
     rate(){
       return Math.round(this.$store.state.exchangeRate * 10000) / 100;
@@ -293,7 +293,6 @@ export default {
       colors: [featured[0].color],
     });
     this.localAlerts = [false];
-    this.savedUserHat = this.userHat.hatID
   }
 }
 </script>

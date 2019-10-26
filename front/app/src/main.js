@@ -9,15 +9,18 @@ import BarChart from "./components/BarChart";
 import Web3Btn from "./components/Web3Btn";
 import Proportions from "./components/proportions";
 import Cryptoicon from "vue-cryptoicon";
+import Social from "./components/Social";
 import { Eth, Dai } from "vue-cryptoicon/src/icons";
 Cryptoicon.add([Eth, Dai]);
 Vue.use(Cryptoicon);
 Vue.config.productionTip = false;
-
+import SocialSharing from "vue-social-sharing";
+Vue.use(SocialSharing);
 Vue.component("token-svg", TokenSvg);
 Vue.component("bar-chart", BarChart);
 Vue.component("web3-btn", Web3Btn);
 Vue.component("proportions", Proportions);
+Vue.component("social", Social);
 
 Vue.filter("formatAddress", function(value) {
     if (!value) return "";
