@@ -109,7 +109,6 @@
   import router from "@/router.js";
   import Drawer from '@/components/Drawer.vue';
   import Snackbar from '@/components/Snackbar.vue';
-  import Interface from '@/views/Interface.vue';
   import Web3Modal from '@/components/Web3Modal.vue';
   import Vuex from 'vuex';
   import {mapState, mapActions, mapGetters} from 'vuex';
