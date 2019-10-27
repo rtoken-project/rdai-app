@@ -4,7 +4,7 @@ import contracts from "./contracts";
 import featured from "../featured.js";
 import randomColor from "../colors.js";
 import Web3 from "web3";
-const { BN, toWei, toBN } = Web3.utils;
+const { BN, toWei, toBN, toHex } = Web3.utils;
 import {
     fromDecimals,
     toDecimals
@@ -346,7 +346,7 @@ export default new Vuex.Store({
                 var rawHat;
                 try{
                     rawHat = await dispatch("getHatByID", {
-                        hatID
+                        hatID: parseInt(hatID)
                     });
                 } catch (e){
                     console.log("error retrieving hat #",hatID, " error: ", e);
@@ -526,10 +526,19 @@ export default new Vuex.Store({
         },
         getHatByID(v, { hatID }) {
             return new Promise(async (resolve, reject) => {
-                contracts.functions.getHatByID
-                    .call(toBN(hatID.toString()))
-                    .then(result => resolve(fillHat(result, hatID)))
-                    .catch(e => reject(e));
+                contracts.functions.getHatByID(hatID)
+                    .then(result => {
+                        var filledHat
+                        try {
+                          filledHat = fillHat(result,hatID);
+                          return resolve(filledHat);
+                        } catch(e){
+                          reject(e);
+                        }
+                    })
+                    .catch(e => {
+                      reject(e)
+                    });
             });
         },
         createHat({ commit, dispatch, state }, { switchToThisHat = true }) {
@@ -692,7 +701,7 @@ export default new Vuex.Store({
                 contracts.functions
                     .mintWithSelectedHat(
                         toWei(amount.toString()),
-                        toBN(state.interfaceHat.hatID.toString()),
+                        state.interfaceHat.hatID.toString(),
                         {
                             from: state.account.address
                         }
@@ -729,7 +738,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 var savedTxHash;
                 contracts.functions
-                    .changeHat(toBN(hatID.toString()), {
+                    .changeHat(hatID.toString(), {
                         from: state.account.address
                     })
                     .on("transactionHash", hash => {
@@ -884,7 +893,7 @@ export default new Vuex.Store({
                             type: "getFaucetDAI",
                             arg: {
                                 address,
-                                amount: 100
+                                amount: "100"
                             },
                             network: state.account.chainId
                         });

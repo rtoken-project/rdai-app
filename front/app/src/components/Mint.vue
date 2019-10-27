@@ -32,6 +32,14 @@
       </v-flex>
     </v-layout>
     <v-layout center mt-5 wrap>
+      <v-flex
+        xs12 mx-auto caption mb-2 text-center
+        v-if="mintOrWhat === 'mintWithSelectedHat'"
+        >
+        This will change your pool from pool #{{ userHat.hatID }} to pool #{{ interfaceHat.hatID }}.
+        <br>
+        <a @click="resetUserHat" class="pointer">Click here to re-select your current pool (#{{userHat.hatID}}).</a>
+      </v-flex>
       <v-flex xs12 mx-auto>
         <web3-btn
           v-if="needsUnlock"
@@ -72,50 +80,55 @@ import vuex from 'vuex';
 import {mapActions, mapState, mapGetters} from 'vuex';
 
 export default {
-  name: 'mint',
-  props: {
-    hat: Object
-  },
-  data: () => ({
-    placeholder: "DAI deposit amount",
-    amount: 50  //preload with maximum balanceq
-  }),
-  computed:{
-    ...mapState(['interfaceHat']),
-    ...mapGetters(['userHat', 'userBalances','userAllowances']),
-    hatSelected() { return this.hat.hasOwnProperty("proportions") && this.hat.proportions.length >= 1},
-    needsUnlock() { return this.userAllowances.dai.length <= (this.amount.toString()).length},
-    hatKind(){
-      if(this.hat.hasOwnProperty("shortTitle")) return "featured";
-      if(this.hat.hasOwnProperty("hatID")) return "custom";
-      else return "create"
-     },
-    chosenHat(){
-      if(this.userBalances.dai < parseInt(this.amount)) return "You need more DAI"
-      switch (this.mintOrWhat) {
-        case "mint":
-          return `Mint rDAI`
-          break;
-        case "mintWithSelectedHat":
-          if(this.hatKind === "featured") return `Mint rDAI and switch to ${this.interfaceHat.shortTitle}`;
-          else return `Mint rDAI and switch to pool #${this.interfaceHat.hatID} `;
-        default:
-          return 'Donate to NEW pool';
-      }
+    name: 'mint',
+    props: {
+        hat: Object
     },
-    mintOrWhat(){
-      if(this.hat.hasOwnProperty("hatID")){
-         if(this.userHat && this.userHat.hatID === this.hat.hatID) return "mint";
-         else return "mintWithSelectedHat";
-      }
-      else return "mintWithNewHat";
+    data: () => ({
+        placeholder: "DAI deposit amount",
+        amount: 50  //preload with maximum balanceq
+    }),
+    computed:{
+        ...mapState(['interfaceHat']),
+        ...mapGetters(['userHat', 'userBalances','userAllowances']),
+        hatSelected() { return this.hat.hasOwnProperty("proportions") && this.hat.proportions.length >= 1},
+        needsUnlock() { return this.userAllowances.dai.length <= (this.amount.toString()).length},
+        hatKind(){
+            if(this.hat.hasOwnProperty("shortTitle")) return "featured";
+            if(this.hat.hasOwnProperty("hatID")) return "custom";
+            else return "create"
+         },
+        chosenHat(){
+            if(this.userBalances.dai < parseInt(this.amount)) return "You need more DAI"
+            switch (this.mintOrWhat) {
+                case "mint":
+                    return `Mint rDAI`
+                    break;
+                case "mintWithSelectedHat":
+                    if(this.hatKind === "featured") return `Mint rDAI and switch to ${this.interfaceHat.shortTitle}`;
+                    else return `Mint rDAI and switch to pool #${this.interfaceHat.hatID} `;
+                default:
+                    return 'Donate to NEW pool';
+            }
+        },
+        mintOrWhat(){
+            if(this.hat.hasOwnProperty("hatID")){
+               if(this.userHat && this.userHat.hatID === this.hat.hatID) return "mint";
+               else return "mintWithSelectedHat";
+            }
+            else return "mintWithNewHat";
+        },
+        formattedAmount(){
+            if(this.amount.length < 1) return '';
+            var a = parseFloat(this.amount);
+            if(a % 1 >= 0 && a % 1 < 0.0001) return a.toFixed(2);
+            else return a;
+        }
     },
-    formattedAmount(){
-      if(this.amount.length < 1) return '';
-      var a = parseFloat(this.amount);
-      if(a % 1 >= 0 && a % 1 < 0.0001) return a.toFixed(2);
-      else return a;
+    methods: {
+        resetUserHat(){
+            this.$store.dispatch("setInterfaceHat", { hatID: this.userHat.hatID });
+        }
     }
-  }
 }
 </script>
