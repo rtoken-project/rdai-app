@@ -37,7 +37,7 @@
                 <v-slider
                 v-model="localProportions[i]"
                 :thumb-size="18"
-                :max="length"
+                :max="1900"
                 :step="19"
                 :min="19"
                 :color="hatInCreation.colors[i]"

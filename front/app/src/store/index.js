@@ -442,37 +442,29 @@ export default new Vuex.Store({
             new Promise(resolve => {
                 const getBalance = async () => {
                     const myTokens = contracts.tokens;
-                    setTimeout(async () => {
-                        const myToken = myTokens[symbol];
-                        const rawBal = await myToken.balanceOf.call(address);
-                        var bal = fromDec(rawBal, symbol);
-                        console.log("bal: ", bal);
-                        if (symbol === "rdai") {
-                            console.log("just before interest calc");
-                            var interest;
-                            try{
-                                interest = await dispatch("interestPayableOf", {
-                                    address: state.account.address
-                                });
-                            } catch(e){
-                                console.log("error: ", e);
-                                interest = 0;
-                            }
-                            bal =
-                                parseFloat(bal) +
-                                parseFloat(interest)
+                    const myToken = myTokens[symbol];
+                    const rawBal = await myToken.balanceOf.call(address);
+                    var bal = fromDec(rawBal, symbol);
+                    console.log("bal: ", bal, symbol);
+                    if (symbol === "rdai") {
+                        var interest;
+                        try{
+                            interest = await dispatch("interestPayableOf", {
+                                address: state.account.address
+                            });
+                        } catch(e){
+                            console.log("error: ", e);
+                            interest = 0;
                         }
-                        if (bal === this.state.account.balances[symbol]) {
-                            setTimeout(() => {
-                                getBalance();
-                            }, 1000);
-                        }
-                        commit("SETBALANCE", {
-                            symbol,
-                            bal
-                        });
-                        return true;
-                    }, 2000);
+                        bal =
+                            parseFloat(bal) +
+                            parseFloat(interest)
+                    }
+                    commit("SETBALANCE", {
+                        symbol,
+                        bal
+                    });
+                    return true;
                 };
                 return resolve(getBalance());
             });
@@ -507,7 +499,7 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 dispatch("getHatByAddress", {
                     address: state.account.address
-                })
+                    })
                     .then(r => {
                         const newHat = {
                             ...r,

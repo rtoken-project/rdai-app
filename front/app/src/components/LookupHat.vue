@@ -4,7 +4,7 @@
     fill-height
     pa-0
     >
-    <v-flex text-center mt-4>
+    <v-flex text-center mt-4 xs12>
       <h3>Lookup address</h3>
       <p>Find out if an address has a pool assigned</p>
     </v-flex>

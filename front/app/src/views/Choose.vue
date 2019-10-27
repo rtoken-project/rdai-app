@@ -132,8 +132,10 @@ export default {
             });
             this.$router.push({
                 path: `/donate/${shortTitle}`,
+                name: '',
                 params: {
-                    url: 'donate'
+                    url: 'donate',
+                    shortTitle
                 }
             })
         },

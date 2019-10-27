@@ -15,7 +15,7 @@
         label="redeem rDAI"
       >
         <template slot="append">
-          <div @click="amount=userBalances.rdai" class="pointer align-center mt-1 mr-3 grey--text">MAX</div>
+          <div @click="calcMax" class="pointer align-center mt-1 mr-3 grey--text">MAX</div>
           <token-svg symbol="rdai" :size="24"></token-svg>
         </template>
       </v-text-field>
@@ -75,7 +75,11 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['redeem'])
+    ...mapActions(['redeem','getBalance']),
+    async calcMax(){
+      await this.getBalance('rdai');
+      this.amount = this.userBalances.rdai
+    }
   }
 }
 </script>

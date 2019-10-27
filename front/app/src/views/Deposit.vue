@@ -1,7 +1,7 @@
 <template>
   <div>
-    <CustomHat v-if="route==='deposit' "/>
-    <FeaturedHat v-else-if="route==='donate'"/>
+    <FeaturedHat v-if="interfaceHat.hasOwnProperty('shortTitle')"/>
+    <CustomHat v-else/>
     <v-divider />
     <Mint :hat="interfaceHat"/>
   </div>

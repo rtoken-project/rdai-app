@@ -13,17 +13,6 @@ const router = new Router({
             path: "/deposit/:hatID?",
             name: "deposit",
             props: true,
-            beforeEnter: (to, from, next) => {
-                var shortTitle = featured.filter(
-                    i => i.hatID === to.params.hatID
-                );
-                if (shortTitle.length > 0) {
-                    shortTitle = shortTitle[0].shortTitle;
-                    next(`/donate/${shortTitle}`);
-                } else {
-                    next();
-                }
-            },
             component: () =>
                 import(/* webpackChunkName: "interface" */ "./views/Deposit.vue")
         },

@@ -102,7 +102,7 @@ export default {
       }
   },
   mounted(){
-      this.load = loading;
+      this.load = this.loading;
   }
 }
 </script>
