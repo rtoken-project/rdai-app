@@ -90,11 +90,13 @@ export default {
                   this.$store.commit("CONFIRMTRANSACTION", result);
               })
               .catch(error => {
+                  console.error("Web3Btn", error);
                   this.$emit("catch", error);
                   if(error.hasOwnProperty("savedTxHash"))
                     this.$store.commit("ERRORTRANSACTION", error.savedTxHash);
               })
               .finally(()=>{
+                  console.debug("Web3Btn finally");
                   setTimeout( () => {
                       this.load = false;
                   }, 1000);
