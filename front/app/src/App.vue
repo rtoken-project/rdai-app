@@ -14,7 +14,7 @@
       max-height="50"
       @click.stop="backToHome"
       ></v-img>
-      <v-layout column ml-2><v-flex class="font-weight-thin font-italic">Alpha</v-flex><v-flex class="font-weight-bold caption">{{ chainName }}</v-flex></v-layout>
+      <v-layout column ml-2><v-flex class="font-weight-thin font-italic">Beta</v-flex><v-flex class="font-weight-bold caption">{{ chainName }}</v-flex></v-layout>
       <v-spacer></v-spacer>
       <span class="subtitle hidden-xs-only">Unlock your DAI<span class="hidden-sm-and-down">'s true potential</span></span>
       <v-spacer></v-spacer>
