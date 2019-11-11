@@ -40,21 +40,21 @@
               light
               centered
               show-arrows
-              fixed-tabs
+              class="tabs-parent"
             >
               <v-tab to="/choose">
                 CHOOSE
               </v-tab>
-              <v-tab to="/create" >
+              <v-tab to="/create">
                 CREATE
               </v-tab>
-              <v-tab to="/deposit" :disabled="!interfaceHat" >
+              <v-tab to="/deposit" :disabled="!interfaceHat">
                 DEPOSIT
               </v-tab>
-              <v-tab to="/redeem" >
+              <v-tab to="/redeem">
                 REDEEM
               </v-tab>
-              <v-tab to="/interest" >
+              <v-tab to="/interest" v-if="$route.name==='interest'">
                 INTEREST
               </v-tab>
             </v-tabs>
@@ -101,6 +101,11 @@
   }
   .v-select__selections *{
     font-size: 1.3em !important;
+  }
+  .tabs-parent .v-tab{
+    font-weight: 600;
+    padding-right: 2.3em;
+    padding-left: 2.3em;
   }
 </style>
 

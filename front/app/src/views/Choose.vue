@@ -33,7 +33,7 @@
                               <span v-else-if="i.shortTitle && i.shortTitle === 'custom'">Build your own</span>
                               <span v-else-if="userHat.hatID && i.hatID === userHat.hatID ">Donate more!</span>
                               <span v-else-if="userHat.hatID">Choose this pool</span>
-                              <span v-else>Donate now!</span>
+                              <span v-else>Donate interest!</span>
                           </v-btn>
                           <!--v-flex v-if="i.hasOwnProperty('loans') && i.hatID === rDAIdevs.hatID">
                               {{ i.loans[0] | formatNumber(2) + 'DAI'}}

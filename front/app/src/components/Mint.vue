@@ -108,7 +108,7 @@ export default {
                     if(this.hatKind === "featured") return `Mint rDAI and switch to ${this.interfaceHat.shortTitle}`;
                     else return `Mint rDAI and switch to pool #${this.interfaceHat.hatID} `;
                 default:
-                    return 'Donate to NEW pool';
+                    return 'Direct to NEW pool';
             }
         },
         mintOrWhat(){

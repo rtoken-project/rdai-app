@@ -10,7 +10,7 @@
     <v-layout class="justify-center my-3">
       <network network="facebook">
         <v-icon class="mx-3 pointer">fab fa-facebook</v-icon>
-      </network>
+      </network>  
       <network network="reddit">
         <v-icon class="mx-3 pointer">fab fa-reddit</v-icon>
       </network>

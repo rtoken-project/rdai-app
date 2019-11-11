@@ -17,6 +17,17 @@ const featured = [
         hatID: 1
     },
     {
+        image: require("./assets/santa.jpeg"),
+        title: "Secret SanDAO",
+        shortTitle: "SecretSanDAO",
+        description:
+            "Secret Santa DAO: Mint 50 rDai and send interest to santa.ismoney.eth via @rdai_dao, letting you buy a NFT lottery ticket! Made with love by @meta_cartel",
+        address: "0x5d8c77d2123ACD0490Bf779eac2be02d5B0D322C",
+        colors: ["#F7997C", "#f13819"],
+        color: "#f13819",
+        hatID: 43
+    },
+    {
         image: require("./assets/building.jpg"),
         title: "rDAI is for buidlers!",
         shortTitle: "custom",
@@ -87,7 +98,7 @@ const featured = [
         address: "0x71610bC1aCF75d39fCf962076D97bE17cd7105Ac",
         colors: ["#F7997C", "#28689e"],
         color: "#28689e",
-        hatID: 7
+    hatID: 7
     },
     {
         image: require("./assets/radicalxchange.png"),
@@ -95,10 +106,11 @@ const featured = [
         shortTitle: "RadicalXchange",
         description:
             "Together, building markets and technologies truer to the richness of our diversely shared lives.",
-        address: "0x82338B1b27cfC0C27D79c3738B748f951Ab1a7A0",
+        address: "0x82ee68fb03ac681fb5a57c8477d712d78d6afd72",
         colors: ["#F7997C", "#ffd200"],
         color: "#ffd200",
-        hatID: 996
+        hatID: 44
     },
+
 ];
 export default featured;

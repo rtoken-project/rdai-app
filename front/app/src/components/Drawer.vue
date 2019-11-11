@@ -30,15 +30,18 @@
         </v-flex>
         <template v-if="userHat && userHat.recipients.length>0">
             <v-divider />
-            <v-list-item @click.stop="showUserHat">
-                <v-list-item-avatar>
+            <v-list-item>
+                <v-list-item-avatar @click.stop="showUserHat" class="pointer">
                     <v-img v-if="userHat.image" :src="userHat.image" :alt="userHat.title" />
                     <v-icon v-else>fas fa-cubes</v-icon>
                 </v-list-item-avatar>
-                <v-list-item-content>
+                <v-list-item-content @click.stop="showUserHat" class="pointer">
                   <v-list-item-title>Current Pool:</v-list-item-title>
                   <v-list-item-subtitle class="font-weight-bold subtitle-2">{{ userHat.shortTitle || '#' + userHat.hatID }}</v-list-item-subtitle>
                 </v-list-item-content>
+                <v-list-item-action v-if="$route.name!=='interest'" class="pointer" @click.stop="$router.push('/interest')">
+                  <v-icon>fa fa-search</v-icon>
+                </v-list-item-action>
             </v-list-item>
             <v-divider />
             <v-flex grow></v-flex>
@@ -47,9 +50,12 @@
                     <token-svg symbol="cdai" :size="30" />
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-title>Current Interest Rate:</v-list-item-title>
+                  <v-list-item-title>Current Rate:</v-list-item-title>
                   <v-list-item-subtitle class="font-weight-bold subtitle-1">{{ rate }}</v-list-item-subtitle>
                 </v-list-item-content>
+                <v-list-item-action v-if="$route.name!=='interest'" class="pointer" @click.stop="$router.push('/interest')">
+                  <v-icon>fa fa-search</v-icon>
+                </v-list-item-action>
             </v-list-item>
         </template>
         <template v-if="txList">

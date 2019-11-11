@@ -323,7 +323,7 @@ export default new Vuex.Store({
                 return resolve(true);
             });
         },
-        async getAllHats({ dispatch, commit }) {
+        getAllHats({ dispatch, commit }) {
             const allHats = [];
             var maxHat = 1;
             /*
@@ -336,13 +336,12 @@ export default new Vuex.Store({
                 // console.log(" error trying to get max hat number", e);
             }*/
             maxHat = 7;
-            try {
-                for (var hatID = 1; hatID <= maxHat; hatID++) {
-                    allHats.push(await dispatch("getFullHat", { hatID }));
+            featured.forEach(
+                async v => {
+                    console.log(v);
+                    allHats.push(await dispatch("getFullHat", { hatID: v.hatID }));
                 }
-            } catch (e) {
-                // console.error("dispatch threw error e: ", e);
-            }
+            );
             commit("SETALLHATS", allHats);
         },
         getFullHat({ dispatch }, { hatID }) {
