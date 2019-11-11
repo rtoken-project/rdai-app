@@ -77,7 +77,7 @@ export default {
     ...mapGetters(['userHat']),
     displayHat(){
       if(this.interfaceHat.length > 0) return this.interfaceHat;
-      else return featured.find(v => v.shortTitle === this.storedUrlHat.shortTitle) || featured.find(v => v.shortTitle === 'rDAIdevs');
+      else return featured.find(v => v.shortTitle.toLowerCase() === this.storedUrlHat.shortTitle.toLowerCase()) || featured.find(v => v.shortTitle === 'rDAIdevs');
     },
     isMyHat(){
       return this.userHat.hatID === this.interfaceHat.hatID;
