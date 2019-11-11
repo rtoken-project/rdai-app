@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FeaturedHat v-if="interfaceHat.hasOwnProperty('shortTitle')"/>
+    <FeaturedHat v-if="featuredHat"/>
     <CustomHat v-else/>
     <v-divider />
     <Mint :hat="interfaceHat"/>
@@ -14,18 +14,6 @@ import FeaturedHat from '@/components/FeaturedHat';
 
 export default {
   name: 'Create',
-  props: {
-      shortTitle: {
-          type: String,
-          default: null,
-          required: false
-      },
-      hatID: {
-          type: String,
-          default: null,
-          required: false
-      }
-  },
   components: {
     Mint,
     CustomHat,
@@ -37,6 +25,11 @@ export default {
     },
     interfaceHat(){
       return this.$store.state.interfaceHat
+    },
+    featuredHat(){
+      if (this.interfaceHat.hasOwnProperty('shortTitle')) return true;
+      else if (this.$store.state.storedUrlHat.hasOwnProperty("shortTitle")) return true;
+      else return false;
     }
   }
 }

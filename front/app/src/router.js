@@ -56,8 +56,8 @@ router.beforeEach((to, from, next) => {
     const { web3modal } = store.state;
     const { hatID, shortTitle } = to.params;
     console.log("to: ", to);
-    if( !hasWeb3 && (to.name === 'donate' || to.name === 'deposit')){
-      store.commit('TOGGLEWEBMODAL', true);
+    if( !hasWeb3 && (to.name === 'deposit' || to.name === 'donate')){
+      if(to.name === 'deposit') store.commit('TOGGLEWEBMODAL', true);
       store.commit('STOREURLHAT', {hatID, shortTitle});
     };
     next(true);
