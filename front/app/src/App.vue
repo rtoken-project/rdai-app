@@ -81,6 +81,7 @@
     <app-snackbar />
     <v-footer fixed ma-2 app>
       <a href="https://twitter.com/rDAI_dao" target="_blank" style="text-decoration: none;color:rgb(29, 161, 242)"><v-icon style="color:rgb(29, 161, 242)">fab fa-twitter</v-icon>@rDAI_dao</a>
+      <a href="https://discordapp.com/invite/J8ymQV9" target="_blank" class="ml-3" style="text-decoration: none;color:#7289DA"><v-icon style="color: #7289DA">fab fa-discord</v-icon>#support channel</a>
       <v-spacer />
       <span class="text-sm-right grey--text">
         {{ new Date().getFullYear() }} - <a href="https://www.decentral.ee" class="grey--text" style="text-decoration:none;">Decentral.ee</a>
