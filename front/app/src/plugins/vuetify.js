@@ -5,23 +5,23 @@ import "vuetify/dist/vuetify.min.css";
 Vue.use(Vuetify);
 
 export default new Vuetify({
-    theme: {
-        options: {
-            customProperties: true
-        },
-        themes: {
-            light: {
-                primary: "#1867c0",
-                secondary: "#349b9c",
-                accent: "#82B1FF",
-                error: "#FF5252",
-                info: "#2196F3",
-                success: "#4CAF50",
-                warning: "#FFC107"
-            }
-        }
+  theme: {
+    options: {
+      customProperties: true
     },
-    icons: {
-        iconfont: "fa"
+    themes: {
+      light: {
+        primary: "#1867c0",
+        secondary: "#349b9c",
+        accent: "#82B1FF",
+        error: "#FF5252",
+        info: "#2196F3",
+        success: "#4CAF50",
+        warning: "#FFC107"
+      }
     }
+  },
+  icons: {
+    iconfont: "fa"
+  }
 });

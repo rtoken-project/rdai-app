@@ -7,14 +7,14 @@
 </template>
 
 <script>
-import LookupHat from '@/components/LookupHat';
-import LookupInterest from '@/components/LookupInterest';
+import LookupHat from "@/components/LookupHat";
+import LookupInterest from "@/components/LookupInterest";
 
 export default {
-  name: 'Interest',
+  name: "Interest",
   components: {
     LookupHat,
     LookupInterest
   }
-}
+};
 </script>

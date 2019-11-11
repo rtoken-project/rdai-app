@@ -23,19 +23,19 @@ Vue.component("proportions", Proportions);
 Vue.component("social", Social);
 
 Vue.filter("formatAddress", function(value) {
-    if (!value) return "";
-    value = value.toString();
-    return value.substr(0, 6) + "..." + value.substr(38, 4);
+  if (!value) return "";
+  value = value.toString();
+  return value.substr(0, 6) + "..." + value.substr(38, 4);
 });
 Vue.filter("formatNumber", function(value, decimals) {
-    if (!value) return "";
-    var cleanedValue = parseFloat(value);
-    return cleanedValue.toFixed(decimals);
+  if (!value) return "";
+  var cleanedValue = parseFloat(value);
+  return cleanedValue.toFixed(decimals);
 });
 
 new Vue({
-    router,
-    store,
-    vuetify,
-    render: h => h(App)
+  router,
+  store,
+  vuetify,
+  render: h => h(App)
 }).$mount("#app");

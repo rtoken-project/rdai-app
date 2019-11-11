@@ -1,11 +1,18 @@
 <template>
-  <v-layout center wrap py-5
+  <v-layout
+    center
+    wrap
+    py-5
     fluid
     pa-0
-    :class="{'wrap': $vuetify.breakpoint.smAndDown, 'nowrap': $vuetify.breakpoint.mdAndUp}"
-    >
+    :class="{
+      wrap: $vuetify.breakpoint.smAndDown,
+      nowrap: $vuetify.breakpoint.mdAndUp
+    }"
+  >
     <v-flex xs12 mb-5 py-5>
-      Exchange your rDAI back to DAI<br>Withdrawn rDAI will immediately stop accruing interest
+      Exchange your rDAI back to DAI<br />Withdrawn rDAI will immediately stop
+      accruing interest
     </v-flex>
     <v-flex xs12 sm5 shrink ml-auto>
       <v-text-field
@@ -15,7 +22,12 @@
         label="redeem rDAI"
       >
         <template slot="append">
-          <div @click="calcMax" class="pointer align-center mt-1 mr-3 grey--text">MAX</div>
+          <div
+            @click="calcMax"
+            class="pointer align-center mt-1 mr-3 grey--text"
+          >
+            MAX
+          </div>
           <token-svg symbol="rdai" :size="24"></token-svg>
         </template>
       </v-text-field>
@@ -38,10 +50,10 @@
       <web3-btn
         color="primary"
         action="redeem"
-        :params="{amount}"
-        :disabled="amount===0"
+        :params="{ amount }"
+        :disabled="amount === 0"
         symbolAppend="dai"
-        >
+      >
         Redeem rDAI
       </web3-btn>
     </v-flex>
@@ -49,37 +61,34 @@
 </template>
 
 <style lang="css" scoped>
-  .pointer{
-    cursor: pointer;
-  }
+.pointer{
+  cursor: pointer;
+}
 </style>
 
 <script>
-import Vue from 'vue';
-import vuex from 'vuex';
-import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: 'redeem',
-  props: {
-  },
+  name: "redeem",
+  props: {},
   data: () => ({
     amount: 0
   }),
-  computed:{
-    ...mapGetters(['userBalances']),
-    formattedAmount(){
+  computed: {
+    ...mapGetters(["userBalances"]),
+    formattedAmount() {
       var a = parseFloat(this.amount);
-      if(a % 1 >= 0 && a % 1 < 0.0001) return a.toFixed(2);
+      if (a % 1 >= 0 && a % 1 < 0.0001) return a.toFixed(2);
       else return a;
     }
   },
-  methods:{
-    ...mapActions(['redeem','getBalance']),
-    async calcMax(){
-      await this.getBalance('rdai');
-      this.amount = this.userBalances.rdai
+  methods: {
+    ...mapActions(["redeem", "getBalance"]),
+    async calcMax() {
+      await this.getBalance("rdai");
+      this.amount = this.userBalances.rdai;
     }
   }
-}
+};
 </script>

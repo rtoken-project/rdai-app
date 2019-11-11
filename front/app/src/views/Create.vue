@@ -1,27 +1,25 @@
 <template>
   <div class="">
-    <CreateHat  />
+    <CreateHat />
     <v-divider />
-    <Mint :hat="hatInCreation"/>
+    <Mint :hat="hatInCreation" />
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
-import vuex from 'vuex';
-import CreateHat from '@/components/CreateHat.vue';
-import Mint from '@/components/Mint.vue';
+import CreateHat from "@/components/CreateHat.vue";
+import Mint from "@/components/Mint.vue";
 
 export default {
-  name: 'create',
+  name: "create",
   components: {
     CreateHat,
     Mint
   },
   computed: {
-    hatInCreation(){
+    hatInCreation() {
       return this.$store.state.hatInCreation;
     }
   }
-}
+};
 </script>

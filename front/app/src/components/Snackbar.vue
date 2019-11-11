@@ -15,7 +15,7 @@
 </style>
 <script type="application/javascript">
 export default {
-  name: 'Snackbar',
+  name: "Snackbar",
   data() {
     return {
       snackbar: false

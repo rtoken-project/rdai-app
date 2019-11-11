@@ -6,11 +6,11 @@
     hashtags="rDai, donate, opensource, ethereum"
     twitter-user="rDAI_dao"
     inline-template
-    >
+  >
     <v-layout class="justify-center my-3">
       <network network="facebook">
         <v-icon class="mx-3 pointer">fab fa-facebook</v-icon>
-      </network>  
+      </network>
       <network network="reddit">
         <v-icon class="mx-3 pointer">fab fa-reddit</v-icon>
       </network>
@@ -26,13 +26,13 @@
 
 <script>
 export default {
-  name: 'Social',
-  props: ['url', 'title', 'description']
-}
+  name: "Social",
+  props: ["url", "title", "description"]
+};
 </script>
 
 <style lang="css">
-  .pointer{
-    cursor : pointer;
-  }
+.pointer{
+  cursor : pointer;
+}
 </style>
