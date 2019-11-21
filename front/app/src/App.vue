@@ -33,7 +33,7 @@
         </div>
         <template v-else>
           <web3-btn activateButton action="activateWeb3" color="primary"
-            >ENABLE WEB3</web3-btn
+            >CONNECT YOUR WALLET</web3-btn
           >
         </template>
       </v-flex>

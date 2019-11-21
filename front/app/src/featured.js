@@ -108,6 +108,18 @@ const featured = [
     colors: ["#F7997C", "#ffd200"],
     color: "#ffd200",
     hatID: 44
+  },
+  {
+    image: require("./assets/graceaid.png"),
+    title: "GRACEaid humanitarian charity/NGO",
+    shortTitle: "GRACEaid",
+    description:
+      "GRACEaid is a charity providing humanitarian aid internationally and supporting people in need locally.",
+    address: "0x236dAA98f115caa9991A3894ae387CDc13eaaD1B",
+    colors: ["#F7997C", "#623089"],
+    color: "#623089",
+    hatID: 57
   }
+
 ];
 export default featured;

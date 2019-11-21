@@ -80,9 +80,9 @@
                 @click="
                   hasWeb3 ? open(i.shortTitle || i.hatID) : activateWeb3()
                 "
-                :disabled="!i.hasOwnProperty('hatID') || !hasWeb3"
+                :disabled="!i.hasOwnProperty('hatID')"
               >
-                <span v-if="!hasWeb3">Enable Web3</span>
+                <span v-if="!hasWeb3">Connect your wallet</span>
                 <span v-else-if="i.shortTitle && i.shortTitle === 'custom'"
                   >Build your own</span
                 >
