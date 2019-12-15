@@ -1,0 +1,33 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+
+  build-and-deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+
+    - name: install awscli
+      run: |
+        pip install --quiet --no-cache-dir awscli=1.16.265
+
+    - name: npm install, build, and test
+      run: |
+        npm ci
+        npm run build
+
+    - name: deploy to s3
+      run: aws s3 sync --acl public-read --delete dist/ s3://app.dev.redeem.money
+      env:
+        AWS_DEFAULT_REGION: eu-central-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
