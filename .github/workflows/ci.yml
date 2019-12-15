@@ -4,11 +4,15 @@ on: [push, pull_request]
 
 jobs:
 
-  build-and-deploy:
+  build:
+
+    # for push events, or pull requests from external repositories
+    if: (github.event_name  == 'push') || (github.event_name  == 'pull_request' && github.repository != 'rtoken-project/rdai' )
 
     runs-on: ubuntu-latest
 
     steps:
+
     - uses: actions/checkout@v1
 
     - name: Use Node.js 10.x
@@ -25,9 +29,30 @@ jobs:
         npm ci
         npm run build
 
-    - name: deploy to s3
-      run: aws s3 sync --acl public-read --delete dist/ s3://app.rdai.money
-      env:
-        AWS_DEFAULT_REGION: eu-central-1
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: archive dist
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: dist
+
+  deploy:
+
+    needs: build
+
+    if: github.ref == 'master'
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: download dist
+        uses: actions/download-artifact@v1
+        with:
+          name: dist
+
+      - name: deploy to s3
+        run: aws s3 sync --acl public-read --delete dist/ s3://app.rdai.money
+        env:
+          AWS_DEFAULT_REGION: eu-central-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
