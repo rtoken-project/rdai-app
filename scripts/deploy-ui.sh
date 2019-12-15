@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd "$(dirname "$0")"/..
-source .env
+source .env.local
 
 export AWS_PROFILE
 
@@ -11,13 +11,15 @@ aws \
   --acl public-read \
   --sse \
   --delete \
-  front/app/dist/ $UI_S3_BUCKET_URI
+  dist/ $UI_S3_BUCKET_URI
 
-aws \
-  cloudfront \
-  create-invalidation \
-  --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
-  --paths '/*'
+if [ ! -z "$CLOUDFRONT_DISTRIBUTION_ID" ];then
+    aws \
+      cloudfront \
+      create-invalidation \
+      --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+      --paths '/*'
+fi
 
 # git rev-parse --verify HEAD
 # git diff-index --quiet HEAD --

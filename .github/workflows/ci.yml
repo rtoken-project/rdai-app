@@ -18,7 +18,7 @@ jobs:
 
     - name: install awscli
       run: |
-        pip install --quiet --no-cache-dir awscli=1.16.265
+        pip install --quiet --no-cache-dir awscli==1.16.265
 
     - name: npm install, build, and test
       run: |
