@@ -1,19 +1,29 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
 
 jobs:
 
   build:
-
-    # for push events, or pull requests from external repositories
-    if: (github.event_name  == 'push') || (github.event_name  == 'pull_request')
 
     runs-on: ubuntu-latest
 
     steps:
 
     - uses: actions/checkout@v1
+
+    - name: show contexts
+      run: |
+        echo github.repository: ${{ github.repository }}
+        echo github.ref: ${{ github.ref }}
+        echo github.head_ref: ${{ github.head_ref }}
+        echo github.base_ref: ${{ github.base_ref }}
 
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
@@ -22,10 +32,6 @@ jobs:
 
     - name: install awscli
       run: |
-        echo github.repository: ${{ github.repository }}
-        echo github.ref: ${{ github.ref }}
-        echo github.head_ref: ${{ github.head_ref }}
-        echo github.base_ref: ${{ github.base_ref }}
         pip install --quiet --no-cache-dir awscli==1.16.265
 
     - name: npm install, build, and test
@@ -43,7 +49,8 @@ jobs:
 
     needs: build
 
-    if: github.ref == 'master'
+    # only deploy for master branch push
+    if: github.event_name  == 'push'
 
     runs-on: ubuntu-latest
 
