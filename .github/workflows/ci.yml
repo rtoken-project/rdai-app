@@ -26,7 +26,7 @@ jobs:
         npm run build
 
     - name: deploy to s3
-      run: aws s3 sync --acl public-read --delete dist/ s3://app.dev.redeem.money
+      run: aws s3 sync --acl public-read --delete dist/ s3://app.rdai.money
       env:
         AWS_DEFAULT_REGION: eu-central-1
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
