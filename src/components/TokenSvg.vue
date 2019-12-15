@@ -7,18 +7,14 @@
 
 <script>
 import Vue from "vue";
-import Rdai from "../assets/rdai.svg";
-import Cdai from "../assets/cdai.svg";
-import Dai from "../assets/dai.svg";
-import Metamask from "../assets/metamask.svg";
+//import Rdai from "../assets/rdai.svg";
+//import Cdai from "../assets/cdai.svg";
+//import Dai from "../assets/dai.svg";
+//import Metamask from "../assets/metamask.svg";
 
 export default {
-  name: "token-svg",
+  name: "TokenSvg",
   components: {
-    Rdai,
-    Cdai,
-    Dai,
-    Metamask
   },
   props: {
     symbol: String,

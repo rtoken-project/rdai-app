@@ -1,4 +1,4 @@
-import * as sdk from "@decentral.ee/rtoken-contracts";
+import * as sdk from "@rtoken/contracts";
 
 const contracts = {
   IRToken: null,
@@ -15,11 +15,11 @@ const contracts = {
     this.IRToken.gasMultiplier = 1.5;
     this.IERC20 = contracts.IERC20;
     this.functions = await this.IRToken.at(tokens.rdai);
-    if (chainId == 4) {
-      this.faucet = await contracts.RinkebyTestDAI.at(
-        "0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa"
-      );
-    }
+    // if (chainId == 4) {
+    //   this.faucet = await contracts.RinkebyTestDAI.at(
+    //     "0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa"
+    //   );
+    // }
     // load all tokens and await all to be done
     var tokensTemp = {};
     await Promise.all(

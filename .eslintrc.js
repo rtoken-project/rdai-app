@@ -6,14 +6,19 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018
   },
-  extends: ["plugin:vue/essential", "@vue/prettier"],
+  extends: [
+    "plugin:vue/recommended",
+    "@vue/prettier"
+  ],
   globals: {
     web3: true,
     ethereum: true
   },
   rules: {
-    parser: "babel-eslint",
     "no-console": "off",
     quotes: ["error", "double"]
+  },
+  parserOptions: {
+    parser: "babel-eslint"
   }
 };

@@ -120,6 +120,5 @@ const featured = [
     color: "#623089",
     hatID: 57
   }
-
 ];
 export default featured;

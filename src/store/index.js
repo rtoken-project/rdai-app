@@ -5,7 +5,7 @@ import featured from "../featured.js";
 import randomColor from "../colors.js";
 import Web3 from "web3";
 const { toWei } = Web3.utils;
-import { fromDecimals } from "@decentral.ee/rtoken-contracts/lib/math-utils";
+import { fromDecimals } from "@/lib/math-utils";
 
 Vue.use(Vuex);
 
@@ -318,7 +318,8 @@ export default new Vuex.Store({
                 // console.log(" error trying to get max hat number", e);
             }*/
       featured.forEach(async v => {
-        v.hatID > 0 && allHats.push(await dispatch("getFullHat", { hatID: v.hatID }));
+        v.hatID > 0 &&
+          allHats.push(await dispatch("getFullHat", { hatID: v.hatID }));
       });
       commit("SETALLHATS", allHats);
     },
@@ -391,9 +392,11 @@ export default new Vuex.Store({
       });
     },
     async getExchangeRate({ commit }) {
-      const rate = await (await fetch(
-        "https://api.compound.finance/api/v2/ctoken?addresses[]=0xf5dce57282a584d2746faf1593d3121fcac444dc"
-      )).json();
+      const rate = await (
+        await fetch(
+          "https://api.compound.finance/api/v2/ctoken?addresses[]=0xf5dce57282a584d2746faf1593d3121fcac444dc"
+        )
+      ).json();
       commit("SETEXCHANGERATE", parseFloat(rate.cToken[0].supply_rate.value));
     },
     setupWeb3Listeners({ commit, dispatch, state }) {

@@ -5,7 +5,7 @@
         <strong>Your Balances</strong>
       </v-subheader>
       <template v-for="(item, i) in fullItems">
-        <v-list-item :key="i" @click="" :ripple="false">
+        <v-list-item :key="i" :ripple="false">
           <v-list-item-avatar>
             <token-svg :symbol="item.symbol" :size="30" />
           </v-list-item-avatar>
@@ -29,16 +29,16 @@
           </v-list-item-action>
         </v-list-item>
       </template>
-      <v-flex text-center mb-4 v-if="chainName == 'Rinkeby'">
+      <!-- <v-flex v-if="chainName == 'Rinkeby'" text-center mb-4>
         <web3-btn color="primary" action="getFaucetDAI" :params="{}">
           GET FAUCET DAI&nbsp;&nbsp;
           <token-svg :size="24" symbol="dai" />
         </web3-btn>
-      </v-flex>
+      </v-flex> -->
       <template v-if="userHat && userHat.recipients.length > 0">
         <v-divider />
         <v-list-item>
-          <v-list-item-avatar @click.stop="showUserHat" class="pointer">
+          <v-list-item-avatar class="pointer" @click.stop="showUserHat">
             <v-img
               v-if="userHat.image"
               :src="userHat.image"
@@ -46,7 +46,7 @@
             />
             <v-icon v-else>fas fa-cubes</v-icon>
           </v-list-item-avatar>
-          <v-list-item-content @click.stop="showUserHat" class="pointer">
+          <v-list-item-content class="pointer" @click.stop="showUserHat">
             <v-list-item-title>Current Pool:</v-list-item-title>
             <v-list-item-subtitle class="font-weight-bold subtitle-2">{{
               userHat.shortTitle || "#" + userHat.hatID
@@ -83,7 +83,7 @@
       </template>
       <template v-if="txList">
         <v-divider />
-        <template v-for="item in editedTxList">
+        <div v-for="item in editedTxList" :key="item.txHash">
           <a
             :href="item.link"
             target="_blank"
@@ -92,17 +92,17 @@
           >
             <v-list-item>
               <v-avatar>
-                <v-icon color="success" v-if="item.conf"
+                <v-icon v-if="item.conf" color="success"
                   >far fa-check-circle</v-icon
                 >
-                <v-icon color="error" v-else-if="item.err"
+                <v-icon v-else-if="item.err" color="error"
                   >far fa-times-circle</v-icon
                 >
                 <v-btn
+                  v-else
                   :loading="true"
                   icon
                   color="primary"
-                  v-else
                   x-small
                 ></v-btn>
               </v-avatar>
@@ -119,14 +119,14 @@
               </v-list-item-content>
             </v-list-item>
           </a>
-        </template>
+        </div>
       </template>
     </v-layout>
   </v-list>
 </template>
 <style lang="css" scoped>
-.round{
-  border-radius: 100%
+.round {
+  border-radius: 100%;
 }
 </style>
 <script>
@@ -134,7 +134,7 @@ import Vuex from "vuex";
 import { mapActions, mapState, mapGetters } from "vuex";
 
 export default {
-  name: "app-drawer",
+  name: "AppDrawer",
   data: () => ({
     items: [
       {
@@ -188,13 +188,9 @@ export default {
             break;
           case "mintWithSelectedHat":
             if (found.hasOwnProperty("shortTitle"))
-              i.text = `Mint ${i.arg.amount} rDAI and switch to ${
-                found.shortTitle
-              }`;
+              i.text = `Mint ${i.arg.amount} rDAI and switch to ${found.shortTitle}`;
             else
-              i.text = `Mint ${i.arg.amount} rDAI and switch to pool #${
-                i.arg.hatID
-              }`;
+              i.text = `Mint ${i.arg.amount} rDAI and switch to pool #${i.arg.hatID}`;
             break;
           case "redeem":
             i.text = `Redeem ${i.arg.amount} rDAI for ${i.arg.amount} DAI`;

@@ -1,8 +1,9 @@
 <template lang="html">
   <v-flex xs12 mt-3>
-    <v-layout nowrap ref="barContainer">
+    <v-layout ref="barContainer" nowrap>
       <v-progress-linear
-        v-for="i in proportions"
+        v-for="(i, index) in proportions"
+        :key="index"
         :color="i.color"
         height="15"
         value="100"
@@ -21,9 +22,12 @@ import Vue from "vue";
 import featured from "../featured.js";
 import randomColor from "../colors.js";
 export default {
-  name: "bar-chart",
+  name: "BarChart",
   props: {
-    hat: Object,
+    hat: {
+      type: Object,
+      required: true
+    },
     showCommission: {
       type: Boolean,
       default: false

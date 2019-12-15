@@ -27,7 +27,11 @@
             No pool
           </v-flex>
         </template>
-        <template v-else v-for="(item, i) in displayHat.length" md12>
+        <v-flex
+          v-else
+          v-for="(_, i) in displayHat.length"
+          :key="i"
+          md12>
           <v-flex xs12 row>
             <v-layout nowrap>
               <v-flex grow nowrap text-left>
@@ -46,7 +50,10 @@
                   {{ displayHat.recipients[i] }}
                 </template>
               </v-flex>
-              <v-flex text-right ml-3>
+              <v-flex
+                text-right
+                ml-3
+              >
                 {{
                   (
                     (displayHat.proportions[i] / displayHat.totalProportions) *
@@ -57,13 +64,13 @@
             </v-layout>
           </v-flex>
           <v-divider hidden-md-and-up />
-        </template>
+        </v-flex>
       </v-layout>
       <bar-chart v-if="displayHat.length > 1" :hat="displayHat" />
       <v-flex
+        v-if="displayHat.hatID !== userHat.hatID && displayHat.hatID > 0"
         xs12
         my-5
-        v-if="displayHat.hatID !== userHat.hatID && displayHat.hatID > 0"
       >
         <web3-btn action="changeHat" :params="{ hatID: displayHat.hatID }">
           Switch to this pool
@@ -74,22 +81,22 @@
 </template>
 
 <style lang="css" scoped>
-.pointer{
+.pointer {
   cursor: pointer;
 }
-.justify-text{
+.justify-text {
   text-align: justify;
 }
-.minus-bottom{
+.minus-bottom {
   margin-bottom: -1em;
 }
-.minus-top{
+.minus-top {
   margin-top: -1em;
 }
-.minus-top-8{
+.minus-top-8 {
   margin-top: -0.8em;
 }
-.row{
+.row {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
@@ -99,10 +106,9 @@
 import vuex from "vuex";
 import { mapActions, mapGetters, mapState } from "vuex";
 import featured from "../featured";
-import randomColor from "../colors";
 
 export default {
-  name: "app-custom-hat",
+  name: "AppCustomHat",
   props: {
     hat: {
       type: Object,

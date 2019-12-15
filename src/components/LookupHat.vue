@@ -6,33 +6,33 @@
     </v-flex>
     <v-flex sm8 shrink mx-auto text-xs-center>
       <v-text-field
+        v-model="lookupAddress"
         label="Lookup Address"
         single-line
-        v-model="lookupAddress"
         :counter="42"
         :disabled="disableInput"
       >
         <template slot="append">
           <div
             v-if="lookupAddress.length === 0 && hasWeb3"
-            @click="lookupAddress = userAddress"
             class="pointer align-center mt-1 mr-3 grey--text"
+            @click="lookupAddress = userAddress"
           >
             {{ userAddress | formatAddress }}
           </div>
         </template>
       </v-text-field>
     </v-flex>
-    <v-flex xs12 mb-4 text-center shrink text-center>
+    <v-flex xs12 mb-4 text-center shrink>
       <web3-btn
         color="primary"
         outlined
         :disabled="lookupAddress.length !== 42"
         action="getHatByAddress"
+        :params="{ address: lookupAddress }"
         @btn-clicked="getHatByAddressClicked"
         @then="getHatByAddressThen"
         @catch="getHatByAddressCatch"
-        :params="{ address: lookupAddress }"
       >
         Lookup Pool
       </web3-btn>
@@ -45,7 +45,7 @@
 </template>
 
 <style lang="css" scoped>
-.pointer{
+.pointer {
   cursor: pointer;
 }
 </style>
@@ -57,7 +57,7 @@ import CustomHat from "./CustomHat.vue";
 import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
-  name: "app-interest",
+  name: "AppInterest",
   components: {
     "app-custom-hat": CustomHat
   },

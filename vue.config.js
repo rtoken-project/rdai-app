@@ -2,10 +2,13 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        data: "@import '~@/sass/main.scss'"
+        sassOptions: {
+          data: "@import '~@/sass/main.scss'"
+        }
       }
     }
   },
+
   /*
     chainWebpack: config => {
         config.module.rules.delete("svg");

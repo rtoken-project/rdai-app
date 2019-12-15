@@ -7,17 +7,17 @@
       </v-flex>
       <v-flex sm8 shrink mx-auto text-xs-center>
         <v-text-field
+          v-model="beneficiary"
           label="Beneficiary"
           single-line
-          v-model="beneficiary"
           :counter="42"
           :disabled="disableInput"
         >
           <template slot="append">
             <div
               v-if="beneficiary.length === 0 && hasWeb3"
-              @click="beneficiary = userAddress"
               class="pointer align-center mt-1 mr-3 grey--text"
+              @click="beneficiary = userAddress"
             >
               {{ userAddress | formatAddress }}
             </div>
@@ -25,50 +25,35 @@
         </v-text-field>
       </v-flex>
       <v-flex
+        v-if="totalAvailable === 0 && noInterest"
         xs12
         mb-4
         text-center
         shrink
-        text-center
-        v-if="totalAvailable === 0 && noInterest"
       >
         <span v-if="receivedLoanOf > 0"
           >You have some interest, but not sure how much.</span
         >
         <span v-else>You haven't accrued any interest</span>
       </v-flex>
-      <v-flex
-        xs12
-        mb-4
-        text-center
-        shrink
-        text-center
-        v-else-if="totalAvailable === 0"
-      >
+      <v-flex v-else-if="totalAvailable === 0" xs12 mb-4 text-center shrink>
         <web3-btn
           color="primary"
           outlined
           :disabled="beneficiary.length !== 42"
           action="interestPayableOf"
+          :params="{ address: beneficiary }"
           @btn-clicked="interestPayableOfClicked"
           @then="interestPayableOfThen"
           @catch="interestPayableOfCatch"
-          :params="{ address: beneficiary }"
         >
           Lookup Interest
         </web3-btn>
       </v-flex>
-      <v-flex v-else xs12 mb-4 text-center shrink text-center>
+      <v-flex v-else xs12 mb-4 text-center shrink>
         There are <strong>{{ totalAvailable }}</strong> rDAI to withdraw
       </v-flex>
-      <v-flex
-        v-if="receivedLoanOf > 0"
-        xs12
-        mb-4
-        text-center
-        shrink
-        text-center
-      >
+      <v-flex v-if="receivedLoanOf > 0" xs12 mb-4 text-center shrink>
         There are currently <strong>{{ receivedLoanOf }}</strong> DAI underlying
       </v-flex>
       <v-flex xs12 mx-xs-auto text-center>
@@ -85,9 +70,8 @@
           :params="{ address: beneficiary }"
           color="primary"
           :disabled="receivedLoanOf <= 0 && totalAvailable <= 0"
+          symbol-append="rdai"
           @then="payInterestThen"
-          @catch=""
-          symbolAppend="rdai"
         >
           Withdraw interest
         </web3-btn>
@@ -103,7 +87,7 @@
 </template>
 
 <style lang="css" scoped>
-.pointer{
+.pointer {
   cursor: pointer;
 }
 </style>

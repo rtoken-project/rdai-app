@@ -1,6 +1,6 @@
 <template>
   <v-list>
-    <v-list-item v-for="(i, index) in hat.length">
+    <v-list-item v-for="(_, index) in hat.length" :key="index">
       <v-list-item-title
         v-if="hat.hasOwnProperty('featured') && hat.featured[index]"
         >{{ hat.featured[index] }}</v-list-item-title

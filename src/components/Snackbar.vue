@@ -7,7 +7,6 @@
     >
     <v-icon class="white--text mr-2">{{ icon }}</v-icon>
     {{ text }}
-    </v-btn>
   </v-snackbar>
 </template>
 
@@ -27,8 +26,6 @@ export default {
     icon() { return this.$store.state.snackbar.icon},
     show() { return this.$store.state.snackbar.show}
   },
-  methods: {
-  },
   watch: {
     show(newVal){
       this.snackbar = newVal;
@@ -38,6 +35,8 @@ export default {
         }, this.timeout);
       }
     }
+  },
+  methods: {
   }
 }
 </script>

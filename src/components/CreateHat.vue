@@ -13,67 +13,73 @@
         >
       </v-layout>
       <v-layout wrap align-center mr-4 subtitle-2>
+
+        <!-- show hat structure without rdai commision -->
         <template
-          v-for="(item, i) in hatInCreation.proportions"
-          md12
-          v-if="hatInCreation.recipients[i].toLowerCase() !== commissionAddress"
+          v-for="(_, i) in hatInCreation.proportions"
         >
-          <v-flex xs12 row>
-            <v-layout nowrap>
-              <v-flex sm1 xs1 d-inline mr-2 class="minus-top-8">
-                <v-btn
-                  icon
-                  color="red"
-                  small
-                  fab
-                  dark
-                  @click="removeRecipient(i)"
-                >
-                  <v-icon>fa fa-minus</v-icon>
-                </v-btn>
-              </v-flex>
-              <v-flex grow nowrap>
-                <div class="text-center">
-                  {{ hatInCreation.recipients[i] | formatAddress }}
-                </div>
-              </v-flex>
-              <v-flex sm7 xs12 :class="{ grow: $vuetify.breakpoint.smAndUp }">
-                <v-slider
-                  v-model="localProportions[i]"
-                  :thumb-size="18"
-                  :max="1900"
-                  :step="19"
-                  :min="19"
-                  :color="hatInCreation.colors[i]"
-                />
-              </v-flex>
-            </v-layout>
-          </v-flex>
           <v-flex
-            mb-3
+            :key="i"
+            v-if="hatInCreation.recipients[i].toLowerCase() !== commissionAddress"
             xs12
-            row
-            text-center
-            class="caption error--text"
-            v-if="localAlerts[i] === true"
           >
-            <v-layout nowrap class="minus-top-8" mb-4>
-              <v-flex xs1 d-inline mr-2>
-                <v-icon color="error">fas fa-exclamation</v-icon>
-              </v-flex>
-              <v-flex grow nowrap>
-                This account is a contract. Make sure it can handle arbitrary
-                ERC20 tokens
-              </v-flex>
-              <v-flex xs1>
-                <v-icon small @click="alertToFalse(i)"
-                  >far fa-times-circle</v-icon
-                >
-              </v-flex>
-            </v-layout>
+            <v-flex
+            >
+              <v-layout nowrap>
+                <v-flex sm1 xs1 d-inline mr-2 class="minus-top-8">
+                  <v-btn
+                    icon
+                    color="red"
+                    small
+                    fab
+                    dark
+                    @click="removeRecipient(i)"
+                  >
+                    <v-icon>fa fa-minus</v-icon>
+                  </v-btn>
+                </v-flex>
+                <v-flex grow nowrap>
+                  <div class="text-center">
+                    {{ hatInCreation.recipients[i] | formatAddress }}
+                  </div>
+                </v-flex>
+                <v-flex sm7 xs12 :class="{ grow: $vuetify.breakpoint.smAndUp }">
+                  <v-slider
+                    v-model="localProportions[i]"
+                    :thumb-size="18"
+                    :max="1900"
+                    :step="19"
+                    :min="19"
+                    :color="hatInCreation.colors[i]"
+                  />
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <v-flex
+              v-if="localAlerts[i] === true"
+              mb-3
+              text-center
+              class="caption error--text"
+            >
+              <v-layout nowrap class="minus-top-8" mb-4>
+                <v-flex xs1 d-inline mr-2>
+                  <v-icon color="error">fas fa-exclamation</v-icon>
+                </v-flex>
+                <v-flex grow nowrap>
+                  This account is a contract. Make sure it can handle arbitrary
+                  ERC20 tokens
+                </v-flex>
+                <v-flex xs1>
+                  <v-icon small @click="alertToFalse(i)"
+                    >far fa-times-circle</v-icon
+                  >
+                </v-flex>
+              </v-layout>
+            </v-flex>
+            <v-divider hidden-md-and-up />
           </v-flex>
-          <v-divider hidden-md-and-up />
         </template>
+
         <v-flex sm1 xs1 nowrap mr-auto class="minus-top">
           <v-btn icon color="green" small fab dark @click="addRecipient()"
             ><v-icon>fa fa-plus</v-icon></v-btn
@@ -90,8 +96,8 @@
             <template slot="append">
               <div
                 v-if="newAddress.length === 0 && hasWeb3"
-                @click="newAddress = userAddress"
                 class="pointer align-center mt-1 mr-3 grey--text"
+                @click="newAddress = userAddress"
               >
                 {{ userAddress | formatAddress }}
               </div>
@@ -100,19 +106,19 @@
         </v-flex>
       </v-layout>
       <bar-chart
-        :hat="hatInCreation"
-        :showCommission="addCommission"
         v-if="hatStarted"
+        :hat="hatInCreation"
+        :show-commission="addCommission"
       />
-      <v-flex xs12 mx-auto my-0 v-if="hatStarted">
+      <v-flex v-if="hatStarted" xs12 mx-auto my-0>
         <v-switch
-          @click.stop="addCommissionClicked"
           v-model="addCommission"
           color="primary"
           :label="commissionLabel"
+          @click.stop="addCommissionClicked"
         />
       </v-flex>
-      <v-flex xs12 mx-auto text-center my-0 v-if="allowCreatingOtherHats">
+      <v-flex v-if="allowCreatingOtherHats" xs12 mx-auto text-center my-0>
         <v-switch
           v-model="switchToThisHat"
           class="justify-center my-0"
@@ -157,9 +163,9 @@
             >
           </p>
         </v-card-text>
-        <v-card-actions @click="commissionModal = false" class="row px-8">
+        <v-card-actions class="row px-8" @click="commissionModal = false">
           <v-btn color="primary" block>Keep donation</v-btn>
-          <v-btn @click="addCommission = false" block class="ml-0 mt-2"
+          <v-btn block class="ml-0 mt-2" @click="addCommission = false"
             >Remove Donation</v-btn
           >
         </v-card-actions>
@@ -169,22 +175,22 @@
 </template>
 
 <style lang="css" scoped>
-.pointer{
+.pointer {
   cursor: pointer;
 }
-.justify-text{
+.justify-text {
   text-align: justify;
 }
-.minus-bottom{
+.minus-bottom {
   margin-bottom: -1em;
 }
-.minus-top{
+.minus-top {
   margin-top: -1em;
 }
-.minus-top-8{
+.minus-top-8 {
   margin-top: -0.8em;
 }
-.row{
+.row {
   margin-left: 0px !important;
   margin-right: 0px !important;
 }
@@ -198,7 +204,7 @@ import randomColor from "../colors";
 import { isAddress } from "web3-utils";
 
 export default {
-  name: "app-create-hat",
+  name: "AppCreateHat",
   data: () => ({
     newAddress: "",
     switchToThisHat: true,
@@ -271,6 +277,14 @@ export default {
       }
     }
   },
+  mounted() {
+    this.setHat({
+      proportions: [100],
+      recipients: [featured[0].address],
+      colors: [featured[0].color]
+    });
+    this.localAlerts = [false];
+  },
   methods: {
     setHat(hat) {
       this.localProportions = hat.proportions;
@@ -333,14 +347,6 @@ export default {
       this.localAlerts.unshift(false);
       this.setHat(hat);
     }
-  },
-  mounted() {
-    this.setHat({
-      proportions: [100],
-      recipients: [featured[0].address],
-      colors: [featured[0].color]
-    });
-    this.localAlerts = [false];
   }
 };
 </script>
