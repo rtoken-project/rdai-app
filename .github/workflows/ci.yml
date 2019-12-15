@@ -40,6 +40,8 @@ jobs:
         npm run build
 
     - name: archive dist
+      # only archive for master branch push
+      if: github.event_name  == 'push'
       uses: actions/upload-artifact@v1
       with:
         name: dist
