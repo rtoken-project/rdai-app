@@ -15,6 +15,11 @@ jobs:
 
     - uses: actions/checkout@v1
 
+    - name: show contexts
+      run: |
+        echo github.ref: ${{ github.ref }}
+        echo github: ${{ JSON.stringify(github) }}
+
     - name: Use Node.js 10.x
       uses: actions/setup-node@v1
       with:
@@ -22,7 +27,6 @@ jobs:
 
     - name: install awscli
       run: |
-        echo github: ${{ github }}
         pip install --quiet --no-cache-dir awscli==1.16.265
 
     - name: npm install, build, and test
@@ -40,7 +44,7 @@ jobs:
 
     needs: build
 
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'master'
 
     runs-on: ubuntu-latest
 
