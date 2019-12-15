@@ -23,6 +23,9 @@ jobs:
     - name: install awscli
       run: |
         echo github.repository: ${{ github.repository }}
+        echo github.ref: ${{ github.ref }}
+        echo github.head_ref: ${{ github.head_ref }}
+        echo github.base_ref: ${{ github.base_ref }}
         pip install --quiet --no-cache-dir awscli==1.16.265
 
     - name: npm install, build, and test
