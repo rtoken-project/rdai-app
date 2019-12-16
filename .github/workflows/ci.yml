@@ -59,6 +59,16 @@ jobs:
         with:
           name: dist
 
+      - name: create empty directory
+        run: |
+          mkdir empty.d
+
+      - name: empty dist archive
+        uses: actions/upload-artifact@v1
+        with:
+          name: dist
+          path: empty.d
+
       - name: deploy to s3
         run: aws s3 sync --acl public-read --delete dist/ s3://app.rdai.money
         env:
