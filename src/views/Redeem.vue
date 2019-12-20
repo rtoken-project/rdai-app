@@ -11,7 +11,7 @@
     }"
   >
     <v-flex xs12 mb-5 py-5>
-      Exchange your rDAI back to DAI<br />Withdrawn rDAI will immediately stop
+      Exchange your rSAI back to SAI<br />Withdrawn rSAI will immediately stop
       accruing interest
     </v-flex>
     <v-flex xs12 sm5 shrink ml-auto>
@@ -19,7 +19,7 @@
         v-model="amount"
         placeholder="Quantity to redeem"
         outlined
-        label="redeem rDAI"
+        label="redeem rSAI"
       >
         <template slot="append">
           <div
@@ -41,7 +41,7 @@
         placeholder="Quantity you receive back"
         outlined
         disabled
-        label="receive DAI"
+        label="receive SAI"
       >
         <token-svg slot="append" symbol="dai" :size="24"></token-svg>
       </v-text-field>
@@ -54,7 +54,7 @@
         :disabled="amount === 0"
         symbolAppend="dai"
       >
-        Redeem rDAI
+        Redeem rSAI
       </web3-btn>
     </v-flex>
   </v-layout>

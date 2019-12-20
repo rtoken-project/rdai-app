@@ -139,12 +139,12 @@ export default {
     items: [
       {
         symbol: "rdai",
-        text: "rDAI",
+        text: "rSAI",
         loading: false
       },
       {
         symbol: "dai",
-        text: " DAI",
+        text: "SAI",
         loading: false
       }
       //{ symbol: 'cdai', text: 'cDAI', loading: false},
@@ -178,28 +178,28 @@ export default {
         const found = this.allHats.find(b => b.hatID === i.arg.hatID);
         switch (i.type) {
           case "getFaucetDAI":
-            i.text = "Get 100 DAI from faucet";
+            i.text = "Get 100 SAI from faucet";
             break;
           case "mint":
-            i.text = `Minting ${i.arg.amount} rDAI`;
+            i.text = `Minting ${i.arg.amount} rSAI`;
             break;
           case "mintWithNewHat":
-            i.text = `Mint ${i.arg.amount} rDAI and create new pool`;
+            i.text = `Mint ${i.arg.amount} rSAI and create new pool`;
             break;
           case "mintWithSelectedHat":
             if (found.hasOwnProperty("shortTitle"))
-              i.text = `Mint ${i.arg.amount} rDAI and switch to ${found.shortTitle}`;
+              i.text = `Mint ${i.arg.amount} rSAI and switch to ${found.shortTitle}`;
             else
-              i.text = `Mint ${i.arg.amount} rDAI and switch to pool #${i.arg.hatID}`;
+              i.text = `Mint ${i.arg.amount} rSAI and switch to pool #${i.arg.hatID}`;
             break;
           case "redeem":
-            i.text = `Redeem ${i.arg.amount} rDAI for ${i.arg.amount} DAI`;
+            i.text = `Redeem ${i.arg.amount} rSAI for ${i.arg.amount} DAI`;
             break;
           case "payInterest":
-            i.text = "Withdraw rDAI interest";
+            i.text = "Withdraw rSAI interest";
             break;
           case "approve":
-            i.text = "Approve contract to use DAI";
+            i.text = "Approve contract to use SAI";
             break;
           case "createHat":
             i.text = "Create new pool";

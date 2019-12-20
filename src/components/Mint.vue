@@ -11,9 +11,9 @@
       <v-flex xs12 sm5 shrink ml-auto>
         <v-text-field
           v-model="amount"
-          placeholder="DAI deposit amount"
+          placeholder="SAI deposit amount"
           outlined
-          label="deposit DAI"
+          label="deposit SAI"
         >
           <template slot="append">
             <div
@@ -32,10 +32,10 @@
       <v-flex xs9 sm5 shrink mr-auto>
         <v-text-field
           :value="formattedAmount"
-          placeholder="rDAI receive amount"
+          placeholder="rSAI receive amount"
           outlined
           disabled
-          label="receive rDAI"
+          label="receive rSAI"
         >
           <token-svg slot="append" symbol="rdai" :size="24"></token-svg>
         </v-text-field>
@@ -66,7 +66,7 @@
           symbolAppend="dai"
           :params="{ symbol: 'dai' }"
         >
-          Please unlock DAI
+          Please unlock SAI
         </web3-btn>
         <web3-btn
           v-else
@@ -84,7 +84,7 @@
         </web3-btn>
       </v-flex>
       <v-flex xs12 mx-auto class="caption">
-        You keep rDAI, interest goes to
+        You keep rSAI, interest goes to
         {{
           interfaceHat.shortTitle === "custom"
             ? "your chosen pool"
@@ -112,7 +112,7 @@ export default {
     hat: Object
   },
   data: () => ({
-    placeholder: "DAI deposit amount",
+    placeholder: "SAI deposit amount",
     amount: 50 //preload with maximum balanceq
   }),
   computed: {
@@ -133,16 +133,16 @@ export default {
     },
     chosenHat() {
       if (this.userBalances.dai < parseInt(this.amount))
-        return "You need more DAI";
+        return "You need more SAI";
       switch (this.mintOrWhat) {
         case "mint":
-          return "Mint rDAI";
+          return "Mint rSAI";
           break;
         case "mintWithSelectedHat":
           if (this.hatKind === "featured")
-            return `Mint rDAI and switch to ${this.interfaceHat.shortTitle}`;
+            return `Mint rSAI and switch to ${this.interfaceHat.shortTitle}`;
           else
-            return `Mint rDAI and switch to pool #${this.interfaceHat.hatID} `;
+            return `Mint rSAI and switch to pool #${this.interfaceHat.hatID} `;
         default:
           return "Direct to NEW pool";
       }

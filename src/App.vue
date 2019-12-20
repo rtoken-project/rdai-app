@@ -19,7 +19,7 @@
       >
       <v-spacer></v-spacer>
       <span class="subtitle hidden-xs-only"
-        >Unlock your DAI<span class="hidden-sm-and-down"
+        >Unlock your SAI<span class="hidden-sm-and-down"
           >'s true potential</span
         ></span
       >
@@ -43,6 +43,7 @@
       <v-container fluid fill-height>
         <v-layout wrap grid-list-sm>
           <v-flex sm12 text-sm-center>
+            <v-alert type="warning" class="black--text" :light="true" dismissible multiline>This website is for SAI only. Compound may STOP support for cSAI any time, so we suggest you migrate your SAI to DAI.<br><router-link :to="redeem">Redeem your SAI</router-link>, and visit <a href="https://migrate.makerdao.com/">migrate.makerDAO.com</a></v-alert>
             <v-tabs
               v-model="tab"
               light
