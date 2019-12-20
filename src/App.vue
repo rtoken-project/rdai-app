@@ -42,12 +42,10 @@
     <v-content>
       <v-container fluid fill-height>
         <v-layout wrap grid-list-sm>
-          <v-flex sm12>
-            <v-alert type="warning">
-              
-            </v-alert>
-          </v-flex>
           <v-flex sm12 text-sm-center>
+            <v-alert type="warning" dismissible class="black--text" light>
+              This website is for Multi-Collateral DAI. To redeem your SAI, visit <a href="rsai.rdai.money">rsai.rdai.money</a>
+            </v-alert>
             <v-tabs
               v-model="tab"
               light

@@ -96,8 +96,8 @@ const featured = [
     address: "0x82338B1b27cfC0C27D79c3738B748f951Ab1a7A0",
     colors: ["#F7997C", "#ffd200"],
     color: "#ffd200",
-    hatID: 1: {
-      6
+    hatID: {
+       1: 6
     }
   },
   {

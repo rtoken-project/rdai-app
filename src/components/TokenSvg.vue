@@ -25,7 +25,7 @@ export default {
   }),
   computed: {
     importedSvg() {
-      return this.allowed.includes(this.symbol);
+      return this.allowed.includes(this.symbol.toLowerCase());
     },
     path() {
       return require(`@/assets/${this.symbol.toLowerCase()}.svg`);

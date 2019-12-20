@@ -15,9 +15,9 @@ const SELF_HAT_ID = MAX_UINT256;
 const HARDCODED_CHAIN = 1;
 const TOKENS = {
   1: {
-    dai: "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
-    cdai: "0xf5dce57282a584d2746faf1593d3121fcac444dc",
-    rdai: "0xea8b224eDD3e342DEb514C4176c2E72Bcce6fFF9"
+    dai: "0x6b175474e89094c44da98b954eedeac495271d0f",
+    cdai: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+    rdai: "0x261b45D85cCFeAbb11F022eBa346ee8D1cd488c0" // UPDATED to rMCDAI legacy was "0xea8b224eDD3e342DEb514C4176c2E72Bcce6fFF9"
   },
   3: {
     cdai: "0x2b536482a01e620ee111747f8334b395a42a555e"
@@ -395,7 +395,7 @@ export default new Vuex.Store({
     async getExchangeRate({ commit }) {
       const rate = await (
         await fetch(
-          "https://api.compound.finance/api/v2/ctoken?addresses[]=0xf5dce57282a584d2746faf1593d3121fcac444dc"
+          "https://api.compound.finance/api/v2/ctoken?addresses[]=0x5d3a536e4d6dbd6114cc1ead35777bab948e3643" //updated to McDai
         )
       ).json();
       commit("SETEXCHANGERATE", parseFloat(rate.cToken[0].supply_rate.value));
@@ -483,10 +483,17 @@ export default new Vuex.Store({
           address: state.account.address
         })
           .then(r => {
+            const featuredMatch = {
+              ...featured.filter(
+                i => i.hatID[state.account.chainId] === r.hatID
+              )[0]
+            };
             const newHat = {
               ...r,
-              ...featured.filter(i => i.hatID[state.account.chainId] === r.hatID)[0]
+              ...featuredMatch
             };
+            if (featuredMatch.hasOwnProperty("hatID"))
+              newHat.hatID = featuredMatch.hatID[state.account.chainId];
             commit("SETUSERHAT", newHat);
             commit("SETINTERFACEHAT", newHat);
             return resolve(true);
