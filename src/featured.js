@@ -14,7 +14,10 @@ const featured = [
     address: "0x5d7d257d97d8a81f51187a77c6dd226fb8424d90",
     colors: ["#F7997C", "#F7997C"],
     color: "#F7997C",
-    hatID: 1
+    hatID: {
+      1: 1,
+
+    }
   },
   {
     image: require("./assets/building.jpg"),
@@ -43,7 +46,9 @@ const featured = [
     address: "0x5d8c77d2123ACD0490Bf779eac2be02d5B0D322C",
     colors: ["#F7997C", "#f13819"],
     color: "#f13819",
-    hatID: 43
+    hatID: {
+      1: 43
+    }
   },
   {
     image: require("./assets/ethhub.png"),
@@ -53,7 +58,9 @@ const featured = [
     address: "0xA19FCDaD77C1F0fd184689aca88BabCF68010347",
     colors: ["#F7997C", "#0a0036"],
     color: "#0a0036",
-    hatID: 3
+    hatID: {
+      1: 3
+    }
   },
   {
     image: require("./assets/giveth.png"),
@@ -63,7 +70,9 @@ const featured = [
     address: "0x8f951903c9360345b4e1b536c7f5ae8f88a64e79",
     colors: ["#F7997C", "#2f0340"],
     color: "#2f0340",
-    hatID: 4
+    hatID: {
+      1: 4
+    }
   },
   {
     image: require("./assets/BFVI.jpg"),
@@ -74,7 +83,9 @@ const featured = [
     address: "0x5f48465bb9a29a3904a8d320146e78640df0e96e",
     colors: ["#F7997C", "#f79430"],
     color: "#f79430",
-    hatID: 5
+    hatID: {
+      1: 5
+    }
   },
   {
     image: require("./assets/ethberlinzwei.svg"),
@@ -85,7 +96,9 @@ const featured = [
     address: "0x82338B1b27cfC0C27D79c3738B748f951Ab1a7A0",
     colors: ["#F7997C", "#ffd200"],
     color: "#ffd200",
-    hatID: 6
+    hatID: 1: {
+      6
+    }
   },
   {
     image: require("./assets/marmaj.png"),
@@ -96,7 +109,9 @@ const featured = [
     address: "0x71610bC1aCF75d39fCf962076D97bE17cd7105Ac",
     colors: ["#F7997C", "#28689e"],
     color: "#28689e",
-    hatID: 7
+    hatID: {
+      1: 7
+    }
   },
   {
     image: require("./assets/radicalxchange.png"),
@@ -107,7 +122,9 @@ const featured = [
     address: "0x82ee68fb03ac681fb5a57c8477d712d78d6afd72",
     colors: ["#F7997C", "#ffd200"],
     color: "#ffd200",
-    hatID: 44
+    hatID: {
+      1: 44
+    }
   },
   {
     image: require("./assets/graceaid.png"),
@@ -118,7 +135,9 @@ const featured = [
     address: "0x236dAA98f115caa9991A3894ae387CDc13eaaD1B",
     colors: ["#F7997C", "#623089"],
     color: "#623089",
-    hatID: 57
+    hatID: {
+      1: 57
+    }
   }
 ];
 export default featured;

@@ -77,9 +77,7 @@
                 v-else
                 color="primary"
                 class="mb-2"
-                @click="
-                  hasWeb3 ? open(i.shortTitle || i.hatID) : activateWeb3()
-                "
+                @click="hasWeb3 ? open(i.shortTitle || i.hatID) : activateWeb3()"
                 :disabled="!i.hasOwnProperty('hatID')"
               >
                 <span v-if="!hasWeb3">Connect your wallet</span>

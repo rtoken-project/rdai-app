@@ -304,8 +304,9 @@ export default new Vuex.Store({
         return resolve(true);
       });
     },
-    getAllHats({ dispatch, commit }) {
+    getAllHats({ state, dispatch, commit }) {
       const allHats = [];
+      const chainId = state.account.chainId;
       /*
       var maxHat = 1;
 
@@ -318,12 +319,12 @@ export default new Vuex.Store({
                 // console.log(" error trying to get max hat number", e);
             }*/
       featured.forEach(async v => {
-        v.hatID > 0 &&
-          allHats.push(await dispatch("getFullHat", { hatID: v.hatID }));
+        v.hatID[chainId] > 0 &&
+          allHats.push(await dispatch("getFullHat", { hatID: v.hatID[chainId] }));
       });
       commit("SETALLHATS", allHats);
     },
-    getFullHat({ dispatch }, { hatID }) {
+    getFullHat({ state, dispatch }, { hatID }) {
       return new Promise(async (resolve, reject) => {
         var rawHat;
         try {
@@ -348,7 +349,7 @@ export default new Vuex.Store({
                 );*/
         const fullHat = {
           ...rawHat,
-          ...featured.filter(i => i.hatID === hatID)[0]
+          ...featured.filter(i => i.hatID[state.account.chainId] === hatID)[0]
         };
         fullHat.hatID = hatID;
         if (!fullHat.hasOwnProperty("colors")) {
@@ -484,7 +485,7 @@ export default new Vuex.Store({
           .then(r => {
             const newHat = {
               ...r,
-              ...featured.filter(i => i.hatID === r.hatID)[0]
+              ...featured.filter(i => i.hatID[state.account.chainId] === r.hatID)[0]
             };
             commit("SETUSERHAT", newHat);
             commit("SETINTERFACEHAT", newHat);
