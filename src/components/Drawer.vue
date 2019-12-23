@@ -144,7 +144,7 @@ export default {
       },
       {
         symbol: "dai",
-        text: " DAI",
+        text: "DAI",
         loading: false
       }
       //{ symbol: 'cdai', text: 'cDAI', loading: false},

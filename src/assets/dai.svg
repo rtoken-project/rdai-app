@@ -1,30 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="115px" height="116px" viewBox="0 0 115 116" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 44 (41411) - http://www.bohemiancoding.com/sketch -->
-    <title>logo-gray_head</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="DCS-v5.0.0" transform="translate(-743.000000, -300.000000)">
-            <g id="logo-gray_head" transform="translate(742.000000, 300.000000)">
-                <g id="Group-6-Copy-4">
-                    <g id="Group-4" style="mix-blend-mode: luminosity;">
-                        <rect id="Rectangle-20" fill="#FBBA00" transform="translate(57.785367, 58.431820) rotate(-315.000000) translate(-57.785367, -58.431820) " x="17.699594" y="18.1584636" width="80.1715458" height="80.5467132"></rect>
-                        <polygon id="Rectangle-20-Copy" fill="#F7A600" transform="translate(57.785367, 58.431820) rotate(-315.000000) translate(-57.785367, -58.431820) " points="17.699594 18.1584636 97.8711399 18.1584636 72.5897214 73.3054525 17.699594 98.7051768"></polygon>
-                        <path
-                            d="M18.6427887,53.4619928 L44.9185341,53.4619928 L57.8249158,40.5421129 L70.6207287,53.3513083 C70.6207287,53.3513083 98.1589043,54.1635086 96.5453076,53.3513083 C94.9317109,52.539108 57.3032414,14.0682008 57.3032414,14.0682008 L18.6427887,53.4619928 Z"
-                            id="Path-1"
-                            fill="#FEFFFE"></path>
-                        <polygon
-                            id="Rectangle-1-Copy-2"
-                            fill="#0A122A"
-                            opacity="0.286333955"
-                            style="mix-blend-mode: multiply;"
-                            transform="translate(86.238406, 57.645231) rotate(1.000000) translate(-86.238406, -57.645231) "
-                            points="57.3137696 0.538870116 115.163042 56.6506321 59.5536123 114.751592"></polygon>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </g>
+<svg width="332" height="283" viewBox="0 0 332 283" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M39.711 0H153.99C223.503 0 276.194 37.3626 295.797 91.7297H331.395V124.59H303.293C303.843 129.783 304.124 135.073 304.124 140.448V141.255C304.124 147.306 303.769 153.255 303.074 159.081H331.395V191.941H295.119C275 245.552 222.717 282.558 153.99 282.558H39.711V191.941H0V159.081H39.711V124.59H0V91.7297H39.711V0ZM71.6589 191.941V253.08H153.99C204.796 253.08 242.543 228.593 260.114 191.941H71.6589ZM269.901 159.081H71.6589V124.59H269.952C270.687 130.018 271.062 135.582 271.062 141.255V142.062C271.062 147.866 270.67 153.548 269.901 159.081ZM153.99 29.4294C205.03 29.4294 242.89 54.5624 260.355 91.7297H71.6589V29.4294H153.99Z" fill="#F4B731"/>
 </svg>

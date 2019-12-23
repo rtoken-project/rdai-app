@@ -15,8 +15,7 @@ const featured = [
     colors: ["#F7997C", "#F7997C"],
     color: "#F7997C",
     hatID: {
-      1: 1,
-
+      1: 2 //updated to rMcDai
     }
   },
   {
@@ -59,7 +58,7 @@ const featured = [
     colors: ["#F7997C", "#0a0036"],
     color: "#0a0036",
     hatID: {
-      1: 3
+      1: 4 //updated to McDai
     }
   },
   {
@@ -71,7 +70,7 @@ const featured = [
     colors: ["#F7997C", "#2f0340"],
     color: "#2f0340",
     hatID: {
-      1: 4
+      1: 5 //updated to McDai
     }
   },
   {
@@ -84,7 +83,7 @@ const featured = [
     colors: ["#F7997C", "#f79430"],
     color: "#f79430",
     hatID: {
-      1: 5
+      1: 6 //updated to McDai
     }
   },
   {
@@ -96,8 +95,8 @@ const featured = [
     address: "0x82338B1b27cfC0C27D79c3738B748f951Ab1a7A0",
     colors: ["#F7997C", "#ffd200"],
     color: "#ffd200",
-    hatID: 1: {
-      6
+    hatID: {
+      1: 7 //updated to McDAI
     }
   },
   {
@@ -110,7 +109,7 @@ const featured = [
     colors: ["#F7997C", "#28689e"],
     color: "#28689e",
     hatID: {
-      1: 7
+      1: 33000
     }
   },
   {
@@ -123,7 +122,7 @@ const featured = [
     colors: ["#F7997C", "#ffd200"],
     color: "#ffd200",
     hatID: {
-      1: 44
+      1: 8 //updated to MCDAI
     }
   },
   {
@@ -136,7 +135,7 @@ const featured = [
     colors: ["#F7997C", "#623089"],
     color: "#623089",
     hatID: {
-      1: 57
+      1: 9 //updated to MCDAI
     }
   }
 ];
