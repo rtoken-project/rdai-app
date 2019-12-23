@@ -138,7 +138,7 @@ export default {
     ...mapState(["allHats"]),
     ...mapGetters(["hasWeb3", "userHat", "rDAIdevs"]),
     allHatsLength() {
-      return this.allHats.length;
+      return this.allHats.length + 2;
     },
     listOfHatsLength() {
       return this.listOfHats.length;
@@ -191,6 +191,7 @@ export default {
         });
         this.listOfHats = list;
       } else this.listOfHats = featured;
+      return this.listOfHats.length;
     }
   },
   watch: {
@@ -200,12 +201,13 @@ export default {
     listOfHatsLength() {
       this.columns = [[], [], [], []];
       this.listOfHats.forEach((item, index) => {
-        if (item.hatID !== 2) {
-          if (item.hatID === this.userHat.hatID)
-            this.columns[index % this.numberOfColumns].unshift(item);
-          else this.columns[index % this.numberOfColumns].push(item);
-        }
+        if (item.hatID === this.userHat.hatID)
+          this.columns[index % this.numberOfColumns].unshift(item);
+        else this.columns[index % this.numberOfColumns].push(item);
       });
+    },
+    hasWeb3(){
+      this.loadAll();
     }
   },
   mounted() {
@@ -213,7 +215,12 @@ export default {
     if (this.$vuetify.breakpoint.smOnly) this.numberOfColumns = 2;
     if (this.$vuetify.breakpoint.mdOnly) this.numberOfColumns = 3;
     if (this.$vuetify.breakpoint.lgOnly) this.numberOfColumns = 4;
-    this.loadAll();
+    const length = this.loadAll();
+    if(length < this.numberOfColumns) {
+      console.log("length: ", length, " this.numberOfColumns: ", this.numberOfColumns);
+      this.numberOfColumns = length;
+      this.loadAll();
+    }
   }
 };
 </script>
