@@ -70,7 +70,9 @@ jobs:
           path: empty.d
 
       - name: deploy to s3
-        run: aws s3 sync --acl public-read --delete dist/ s3://app.rdai.money
+        run: |
+          aws s3 sync --acl public-read --delete dist/ s3://app.rdai.money
+          aws cloudfront create-invalidation --distribution-id E3VVC9PO4TKMU2 --paths '/*'
         env:
           AWS_DEFAULT_REGION: eu-central-1
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
