@@ -9,7 +9,7 @@
     :loading="load"
   >
     <template v-if="!hasWeb3 && !icon">
-      Enable Web3
+      Connect Your Wallet
     </template>
     <slot v-else> </slot>
     <template v-if="symbolAppend.length > 0"

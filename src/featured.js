@@ -15,8 +15,7 @@ const featured = [
     colors: ["#F7997C", "#F7997C"],
     color: "#F7997C",
     hatID: {
-      1: 1,
-
+      1: 2 //updated to rMcDai
     }
   },
   {
@@ -59,7 +58,7 @@ const featured = [
     colors: ["#F7997C", "#0a0036"],
     color: "#0a0036",
     hatID: {
-      1: 3
+      1: 4 //updated to McDai
     }
   },
   {
@@ -71,7 +70,7 @@ const featured = [
     colors: ["#F7997C", "#2f0340"],
     color: "#2f0340",
     hatID: {
-      1: 4
+      1: 5 //updated to McDai
     }
   },
   {
@@ -84,7 +83,7 @@ const featured = [
     colors: ["#F7997C", "#f79430"],
     color: "#f79430",
     hatID: {
-      1: 5
+      1: 6 //updated to McDai
     }
   },
   {
@@ -97,7 +96,11 @@ const featured = [
     colors: ["#F7997C", "#ffd200"],
     color: "#ffd200",
     hatID: {
+<<<<<<< HEAD
        1: 6
+=======
+      1: 7 //updated to McDAI
+>>>>>>> temp
     }
   },
   {
@@ -110,7 +113,7 @@ const featured = [
     colors: ["#F7997C", "#28689e"],
     color: "#28689e",
     hatID: {
-      1: 7
+      1: 33000
     }
   },
   {
@@ -123,7 +126,7 @@ const featured = [
     colors: ["#F7997C", "#ffd200"],
     color: "#ffd200",
     hatID: {
-      1: 44
+      1: 8 //updated to MCDAI
     }
   },
   {
@@ -136,7 +139,20 @@ const featured = [
     colors: ["#F7997C", "#623089"],
     color: "#623089",
     hatID: {
-      1: 57
+      1: 9 //updated to MCDAI
+    }
+  },
+  {
+    image: require("./assets/offsetra_logo.png"),
+    title: "Certified carbon reduction projects",
+    shortTitle: "Offsetra",
+    description:
+      "Make up for your impact on the climate by supporting our curated, high-impact, certified offset projects.",
+    address: "0xa83148b098038f366534253704ae4ff3cf931b94",
+    colors: ["#F7997C", "#A674C1"],
+    color: "#A674C1",
+    hatID: {
+      1: 36 // updated to MCDAI
     }
   }
 ];

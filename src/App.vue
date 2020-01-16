@@ -44,7 +44,14 @@
         <v-layout wrap grid-list-sm>
           <v-flex sm12 text-sm-center>
             <v-alert type="warning" dismissible class="black--text" light>
+<<<<<<< HEAD
               This website is for Multi-Collateral DAI. To redeem your SAI, visit <a href="rsai.rdai.money">rsai.rdai.money</a>
+=======
+              This website is for Multi-Collateral DAI. To redeem your SAI, visit <a href="https://rsai.rdai.money">rsai.rdai.money</a>
+            </v-alert>
+            <v-alert type="error" dismissible class="black--text" light v-if="chainName!== 'Mainnet' && chainName !== 'Kovan'">
+              The {{ chainName }} Network is not supported. Please switch to Mainnet or Kovan
+>>>>>>> temp
             </v-alert>
             <v-tabs
               v-model="tab"
