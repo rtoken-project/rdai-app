@@ -96,11 +96,7 @@ const featured = [
     colors: ["#F7997C", "#ffd200"],
     color: "#ffd200",
     hatID: {
-<<<<<<< HEAD
-       1: 6
-=======
       1: 7 //updated to McDAI
->>>>>>> temp
     }
   },
   {
