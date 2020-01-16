@@ -62,6 +62,7 @@ jobs:
       - name: create empty directory
         run: |
           mkdir empty.d
+          echo > empty.d/.empty
 
       - name: empty dist archive
         uses: actions/upload-artifact@v1
