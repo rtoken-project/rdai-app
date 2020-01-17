@@ -140,10 +140,10 @@ const featured = [
   },
   {
     image: require("./assets/offsetra_logo.png"),
-    title: "Certified carbon reduction projects",
+    title: "Offsetra",
     shortTitle: "Offsetra",
     description:
-      "Make up for your impact on the climate by supporting our curated, high-impact, certified offset projects.",
+      "Certified carbon reduction projects. Make up for your impact on the climate by supporting our curated, high-impact, certified offset projects.",
     address: "0xa83148b098038f366534253704ae4ff3cf931b94",
     colors: ["#F7997C", "#A674C1"],
     color: "#A674C1",
