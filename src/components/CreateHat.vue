@@ -43,7 +43,7 @@
                     {{ hatInCreation.recipients[i] | formatAddress }}
                   </div>
                 </v-flex>
-                <v-flex sm7 xs12 :class="{ grow: $vuetify.breakpoint.smAndUp }">
+                <v-flex sm6 xs11 :class="{ grow: $vuetify.breakpoint.smAndUp }" pr-2>
                   <v-slider
                     v-model="localProportions[i]"
                     :thumb-size="18"
@@ -52,6 +52,10 @@
                     :min="19"
                     :color="hatInCreation.colors[i]"
                   />
+
+                </v-flex>
+                <v-flex xs1 style="line-height:2.3em">
+                  <span>{{ percentage(i) }}%</span>
                 </v-flex>
               </v-layout>
             </v-flex>
@@ -231,7 +235,7 @@ export default {
     },
     rate() {
       return Math.round(this.$store.state.exchangeRate * 10000) / 100;
-    }
+    },
   },
   watch: {
     newAddress(newVal, oldVal) {
@@ -286,6 +290,9 @@ export default {
     this.localAlerts = [false];
   },
   methods: {
+    percentage(index){
+        return Number(this.localProportions[index] * 100 / this.hatInCreation.totalProportions).toFixed(2);
+    },
     setHat(hat) {
       this.localProportions = hat.proportions;
       hat.length = hat.proportions.length;
