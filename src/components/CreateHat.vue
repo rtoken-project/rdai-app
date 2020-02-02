@@ -258,14 +258,14 @@ export default {
     },
     localProportions: {
       handler: function(newVal) {
+        const hat = this.hatInCreation;
         if (this.addCommission) {
-          const hat = this.hatInCreation;
           hat.proportions = newVal;
           hat.proportions[0] =
             (newVal.reduce((a, b) => a + b, 0) - newVal[0]) / 19;
-          hat.totalProportions = hat.proportions.reduce((a, b) => a + b, 0);
-          this.$store.commit("SETHATINCREATION", hat);
         }
+        hat.totalProportions = hat.proportions.reduce((a, b) => a + b, 0);
+        this.$store.commit("SETHATINCREATION", hat);
       },
       deep: true
     },
