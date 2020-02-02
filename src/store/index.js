@@ -19,21 +19,10 @@ const TOKENS = {
     cdai: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
     rdai: "0x261b45D85cCFeAbb11F022eBa346ee8D1cd488c0" // UPDATED to rMCDAI legacy was "0xea8b224eDD3e342DEb514C4176c2E72Bcce6fFF9"
   },
-  3: {
-    cdai: "0x2b536482a01e620ee111747f8334b395a42a555e"
-  },
-  4: {
-    dai: "0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa",
-    cdai: "0x6d7f0754ffeb405d23c51ce938289d4835be3b14",
-    rdai: "0x6AA5c6aB94403Bdbbf74f21607D46Be631E6CcC5"
-  },
-  5: {
-    cdai: "0xd9fd9e875c9c1d567825e431dd6ed4f0e51aa8bf"
-  },
   42: {
-    dai: "0xbF7A7169562078c96f0eC1A8aFD6aE50f12e5A99",
-    cdai: "0x0a1e4d0b5c71b955c0a5993023fc48ba6e380496",
-    rdai: "0x3183683cEeAb01699722053A2cb6A945cE0D7CeC"
+    dai: "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa",
+    cdai: "0xe7bc397dbd069fc7d0109c0636d06888bb50668c",
+    rdai: "0x462303f77a3f17Dbd95eb7bab412FE4937F9B9CB"
   },
   decimals: {
     dai: 18,
