@@ -143,7 +143,7 @@ const featured = [
     title: "Offsetra",
     shortTitle: "Offsetra",
     description:
-      "Dashboard for DeFi",
+      "Certified carbon reduction projects. Make up for your impact on the climate by supporting our curated, high-impact, certified offset projects.",
     address: "0x43a5C1331375f1F34BD774eCaeE51501E9Ca2dB5",
     colors: ["#F7997C", "#A674C1"],
     color: "#A674C1",
@@ -156,7 +156,7 @@ const featured = [
     title: "DefiSnap",
     shortTitle: "Defisnap",
     description:
-      "Certified carbon reduction projects. Make up for your impact on the climate by supporting our curated, high-impact, certified offset projects.",
+      "Dashboard for DeFi",
     address: "0xa83148b098038f366534253704ae4ff3cf931b94",
     colors: ["#F7997C", "#A674C1"],
     color: "#A674C1",
